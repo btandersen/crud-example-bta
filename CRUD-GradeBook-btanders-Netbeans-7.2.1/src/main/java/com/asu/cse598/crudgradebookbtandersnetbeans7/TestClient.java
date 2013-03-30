@@ -4,6 +4,8 @@
  */
 package com.asu.cse598.crudgradebookbtandersnetbeans7;
 
+import com.sun.jersey.api.client.ClientResponse;
+
 /**
  *
  * @author Brandon
@@ -12,29 +14,41 @@ public class TestClient {
 
     public static void main(String[] args) {
         GradeBookJsonMapper g = new GradeBookJsonMapper();
-        Student s = new Student();
+        TestClientProxy p = new TestClientProxy();
+
         WorkItemType wit = new WorkItemType();
-        WorkItem wi = new WorkItem();
-        GradedWorkItem gwi = new GradedWorkItem();
+        wit._id = "application";
+        wit.graduateWeight = 0.30;
+        wit.underGraduateWeight = 0.35;
 
         try {
-            System.out.println(g.studentObjToJson(s));
-            System.out.println(g.workItemTypeObjToJson(wit));
-            System.out.println(g.workItemObjToJson(wi));
-            System.out.println(g.gradedWorkItemObjToJson(gwi));
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+            ClientResponse c = p.addWorkItemType(g.workItemTypeObjToJson(wit));
+            System.out.println(c.getStatus());
+            System.out.println(c.getEntity(String.class));
 
-        try {
-            Student s1 = g.studentJsonToObj(g.studentObjToJson(s));
-            System.out.println(s1);
-            WorkItemType wit1 = g.workItemTypeJsonToObj(g.workItemTypeObjToJson(wit));
-            System.out.println(wit1);
-            WorkItem wi1 = g.workItemJsonToObj(g.workItemObjToJson(wi));
-            System.out.println(wi1);
-            GradedWorkItem gwi1 = g.gradedWorkItemJsonToObj(g.gradedWorkItemObjToJson(gwi));
-            System.out.println(gwi1);
+            c = p.getWorkItemType(ClientResponse.class, wit._id);
+            System.out.println(c.getStatus());
+            System.out.println(c.getEntity(String.class));
+
+            wit.graduateWeight = 0.35;
+            
+            c = p.updateWorkItemType(g.workItemTypeObjToJson(wit), wit._id);
+            System.out.println(c.getStatus());
+            System.out.println(c.getEntity(String.class));
+            
+            c = p.getWorkItemType(ClientResponse.class, wit._id);
+            System.out.println(c.getStatus());
+            System.out.println(c.getEntity(String.class));
+
+//            c = p.deleteWorkItemType(wit._id);
+//            System.out.println(c.getStatus());
+//            System.out.println(c.getEntity(String.class));
+            
+            c = p.getWorkItemType(ClientResponse.class, wit._id);
+            System.out.println(c.getStatus());
+            System.out.println(c.getEntity(String.class));
+            
+            p.close();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

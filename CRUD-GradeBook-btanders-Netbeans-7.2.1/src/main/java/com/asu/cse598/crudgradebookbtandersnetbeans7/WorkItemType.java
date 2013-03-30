@@ -9,12 +9,12 @@ package com.asu.cse598.crudgradebookbtandersnetbeans7;
  * @author Brandon
  */
 public class WorkItemType {
-    public long _id;
+    public String _id;
     public double graduateWeight;
     public double underGraduateWeight;
     
     public WorkItemType() {
-        this._id = -1;
+        this._id = null;
         this.graduateWeight = 0.0;
         this.underGraduateWeight = 0.0;
     }
