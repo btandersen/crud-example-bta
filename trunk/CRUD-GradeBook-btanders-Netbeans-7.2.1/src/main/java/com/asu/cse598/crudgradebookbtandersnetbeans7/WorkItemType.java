@@ -21,6 +21,8 @@ public class WorkItemType {
     
     @Override
     public String toString() {
-        return "ID: " + this._id + " | GradWgt: " + this.graduateWeight + " | UnderGradWgt: " + this.underGraduateWeight;
+        return "ID: " + this._id + 
+                " | GradWgt: " + this.graduateWeight + 
+                " | UnderGradWgt: " + this.underGraduateWeight;
     }
 }

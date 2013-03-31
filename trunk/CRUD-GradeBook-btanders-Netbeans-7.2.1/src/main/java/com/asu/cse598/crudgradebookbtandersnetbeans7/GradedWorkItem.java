@@ -8,19 +8,27 @@ package com.asu.cse598.crudgradebookbtandersnetbeans7;
  *
  * @author Brandon
  */
-public class GradedWorkItem {
-    public String _id;
-    public String studentId;
-    public int points;
+public class GradedWorkItem extends WorkItem {
     
+    public String student_id;
+    public int points;
+    public String comments;
+    public String appeal;
+        
     public GradedWorkItem() {
         this._id = null;
-        this.studentId = null;
+        this.student_id = null;
         this.points = 0;
+        this.appeal = "";
+        this.comments = "";
     }
     
     @Override
     public String toString() {
-        return "ID: " + this._id + " | StudentID: " + this.studentId + " | Poimts: " + this.points;
+        return super.toString() +
+                " | StudentID: " + this.student_id + 
+                " | Poimts: " + this.points +
+                " | Comments: " + this.comments +
+                " | Appeal: " + this.appeal;
     }
 }

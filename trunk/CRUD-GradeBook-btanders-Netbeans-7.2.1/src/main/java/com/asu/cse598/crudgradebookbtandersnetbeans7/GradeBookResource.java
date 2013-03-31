@@ -10,6 +10,7 @@ import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
+import java.util.ArrayList;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Consumes;
@@ -79,7 +80,7 @@ public class GradeBookResource {
         }
 
         this.mongoClient.close();
-        
+
         return builder.build();
     }
 
@@ -106,7 +107,7 @@ public class GradeBookResource {
         }
 
         this.mongoClient.close();
-        
+
         return builder.build();
     }
 
@@ -120,7 +121,7 @@ public class GradeBookResource {
         DBCollection coll = this.db.getCollection("workItemType");
 
         DBCursor cursor = coll.find(new BasicDBObject("_id", _id));
-        
+
         try {
             WorkItemType workItemType = this.mapper.workItemTypeJsonToObj(workItemTypeJson);
 
@@ -140,7 +141,7 @@ public class GradeBookResource {
         }
 
         this.mongoClient.close();
-        
+
         return builder.build();
     }
 
@@ -164,6 +165,341 @@ public class GradeBookResource {
             }
         } catch (Exception e) {
             builder = Response.status(500).entity(e.getMessage());
+        } finally {
+            cursor.close();
+        }
+
+        this.mongoClient.close();
+
+        return builder.build();
+    }
+
+    // WorkItem Resource
+    @POST
+    @Path("/WorkItem")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addWorkItem(String workItemJson) {
+
+        Response.ResponseBuilder builder;
+
+        try {
+            DBCollection coll = this.db.getCollection("workItem");
+            
+            DBCollection workItemTypeColl = this.db.getCollection("workItemType");
+
+            WorkItem workItem = mapper.workItemJsonToObj(workItemJson);
+
+            DBCursor cursor = workItemTypeColl.find(new BasicDBObject("_id", workItem.workItemType_id));
+
+            if (cursor.hasNext()) {
+                BasicDBObject doc = new BasicDBObject("_id", workItem._id).append("workItemType_id", workItem.workItemType_id).append("totalPoints", workItem.totalPoints);
+                
+                coll.insert(doc);
+
+                builder = Response.ok(mapper.workItemObjToJson(workItem));
+            } else {
+                builder = Response.status(400).entity("Invalid workItemType_id, must correspond to valid WorkItemType");
+            }
+        } catch (Exception e) {
+            builder = Response.status(409).entity(e.getMessage());
+        }
+
+        this.mongoClient.close();
+
+        return builder.build();
+    }
+
+    @GET
+    @Path("/WorkItem/{_id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getWorkItem(@PathParam("_id") String _id) {
+        Response.ResponseBuilder builder;
+
+        DBCollection coll = this.db.getCollection("workItem");
+
+        DBCursor cursor = coll.find(new BasicDBObject("_id", _id));
+
+        try {
+            if (cursor.hasNext()) {
+                builder = Response.ok(cursor.next().toString());
+            } else {
+                builder = Response.status(404).entity("Not Found");
+            }
+        } catch (Exception e) {
+            builder = Response.status(500).entity(e.getMessage());
+        } finally {
+            cursor.close();
+        }
+
+        this.mongoClient.close();
+
+        return builder.build();
+    }
+
+    @PUT
+    @Path("/WorkItem/{_id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateWorkItem(@PathParam("_id") String _id, String workItemJson) {
+        Response.ResponseBuilder builder;
+
+        DBCollection coll = this.db.getCollection("workItem");
+
+        DBCursor cursor = coll.find(new BasicDBObject("_id", _id));
+
+        try {
+            DBCollection workItemTypeColl = this.db.getCollection("workItemType");
+
+            WorkItem workItem = this.mapper.workItemJsonToObj(workItemJson);
+
+            DBCursor workItemTypeCursor = workItemTypeColl.find(new BasicDBObject("_id", workItem.workItemType_id));
+            
+            if (workItemTypeCursor.hasNext()) {
+                if (cursor.hasNext()) {
+                    DBObject oldObj = cursor.next();
+
+                    coll.update(oldObj, new BasicDBObject("_id", workItem._id).append("workItemType_id", workItem.workItemType_id).append("totalPoints", workItem.totalPoints));
+
+                    builder = Response.ok(this.mapper.workItemObjToJson(workItem));
+                } else {
+                    builder = Response.status(404).entity("Not Found");
+                }
+            } else {
+                builder = Response.status(400).entity("Invalid workItemType_id, must correspond to valid WorkItemType");
+            }
+        } catch (Exception e) {
+            builder = Response.status(500).entity(e.getMessage());
+        } finally {
+            cursor.close();
+        }
+
+        this.mongoClient.close();
+
+        return builder.build();
+    }
+
+    @DELETE
+    @Path("/WorkItem/{_id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deleteWorkItem(@PathParam("_id") String _id) {
+        Response.ResponseBuilder builder;
+
+        DBCollection coll = this.db.getCollection("workItem");
+
+        DBCursor cursor = coll.find(new BasicDBObject("_id", _id));
+
+        try {
+            if (cursor.hasNext()) {
+                coll.remove(new BasicDBObject("_id", _id));
+
+                builder = Response.ok();
+            } else {
+                builder = Response.status(404).entity("Not Found");
+            }
+        } catch (Exception e) {
+            builder = Response.status(500).entity(e.getMessage());
+        } finally {
+            cursor.close();
+        }
+
+        this.mongoClient.close();
+
+        return builder.build();
+    }
+    
+    // GradedWorkItem Resource
+    @POST
+    @Path("/GradedWorkItem")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addGradedWorkItem(String gradedWorkItemJson) {
+
+        Response.ResponseBuilder builder;
+
+        try {
+            DBCollection coll = this.db.getCollection("gradedWorkItem");
+            
+            DBCollection workItemColl = this.db.getCollection("workItem");
+
+            GradedWorkItem gradedWorkItem = mapper.gradedWorkItemJsonToObj(gradedWorkItemJson);
+
+            DBCursor cursor = workItemColl.find(new BasicDBObject("_id", gradedWorkItem._id));
+
+            if (cursor.hasNext()) {
+                BasicDBObject doc = new BasicDBObject("_id", gradedWorkItem._id + 
+                        "|" + gradedWorkItem.student_id)
+                        .append("workItemType_id", gradedWorkItem.workItemType_id)
+                        .append("totalPoints", gradedWorkItem.totalPoints)
+                        .append("student_id", gradedWorkItem.student_id)
+                        .append("points", gradedWorkItem.points)
+                        .append("comments", gradedWorkItem.comments)
+                        .append("appeal",gradedWorkItem.appeal);
+                
+                coll.insert(doc);
+
+                builder = Response.ok(mapper.workItemObjToJson(this.mapper.gradedWorkItemJsonToObj(doc.toString())));
+            } else {
+                builder = Response.status(400).entity("Invalid type_id, must correspond to valid WorkItemType");
+            }
+        } catch (Exception e) {
+            builder = Response.status(409).entity(e.getMessage());
+        }
+
+        this.mongoClient.close();
+
+        return builder.build();
+    }
+
+    @GET
+    @Path("/GradedWorkItem/{_id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getGradedWorkItem(@PathParam("_id") String _id) {
+        Response.ResponseBuilder builder;
+
+        DBCollection coll = this.db.getCollection("gradedWorkItem");
+
+        DBCursor cursor = coll.find(new BasicDBObject("_id", _id));
+
+        try {
+            if (cursor.hasNext()) {
+                builder = Response.ok(cursor.next().toString());
+            } else {
+                builder = Response.status(404).entity("Not Found");
+            }
+        } catch (Exception e) {
+            builder = Response.status(500).entity(e.getMessage());
+        } finally {
+            cursor.close();
+        }
+
+        this.mongoClient.close();
+
+        return builder.build();
+    }
+
+    @PUT
+    @Path("/GradedWorkItem/{_id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateGradedWorkItem(@PathParam("_id") String _id, String gradedWorkItemJson) {
+        Response.ResponseBuilder builder;
+
+        DBCollection coll = this.db.getCollection("gradedWorkItem");
+
+        DBCursor cursor = coll.find(new BasicDBObject("_id", _id));
+
+        try {
+            GradedWorkItem gradedWorkItem = this.mapper.gradedWorkItemJsonToObj(gradedWorkItemJson);
+
+            if (cursor.hasNext()) {
+                DBObject oldObj = cursor.next();
+
+                coll.update(oldObj, new BasicDBObject("_id", gradedWorkItem._id + 
+                        "|" + gradedWorkItem.student_id)
+                        .append("workItemType_id", gradedWorkItem.workItemType_id)
+                        .append("totalPoints", gradedWorkItem.totalPoints)
+                        .append("student_id", gradedWorkItem.student_id)
+                        .append("points", gradedWorkItem.points)
+                        .append("comments", gradedWorkItem.comments)
+                        .append("appeal",gradedWorkItem.appeal));
+
+                builder = Response.ok(this.mapper.gradedWorkItemObjToJson(gradedWorkItem));
+            } else {
+                builder = Response.status(404).entity("Not Found");
+            }
+        } catch (Exception e) {
+            builder = Response.status(500).entity(e.getMessage());
+        } finally {
+            cursor.close();
+        }
+
+        this.mongoClient.close();
+
+        return builder.build();
+    }
+
+    @DELETE
+    @Path("/GradedWorkItem/{_id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deleteGradedWorkItem(@PathParam("_id") String _id) {
+        Response.ResponseBuilder builder;
+
+        DBCollection coll = this.db.getCollection("gradedWorkItem");
+
+        DBCursor cursor = coll.find(new BasicDBObject("_id", _id));
+
+        try {
+            if (cursor.hasNext()) {
+                coll.remove(new BasicDBObject("_id", _id));
+
+                builder = Response.ok();
+            } else {
+                builder = Response.status(404).entity("Not Found");
+            }
+        } catch (Exception e) {
+            builder = Response.status(500).entity(e.getMessage());
+        } finally {
+            cursor.close();
+        }
+
+        this.mongoClient.close();
+
+        return builder.build();
+    }
+    
+    // Student Resources
+    @POST
+    @Path("/Student")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addStudent(String studentJson) {
+        Response.ResponseBuilder builder;
+        
+        try {
+            DBCollection coll = this.db.getCollection("student");
+
+            Student student = this.mapper.studentJsonToObj(studentJson);
+            
+            student.firstName = student.firstName.toLowerCase();
+            student.lastName = student.lastName.toLowerCase();
+
+            BasicDBObject doc = new BasicDBObject("_id", student.firstName.substring(0, 2) + student.lastName.substring(0, 6))
+                    .append("firstName", student.firstName)
+                    .append("lastName", student.lastName);
+
+            coll.insert(doc);
+
+            builder = Response.ok(this.mapper.studentObjToJson(this.mapper.studentJsonToObj(doc.toString())));
+
+        } catch (Exception e) {
+            builder = Response.status(400).entity(e.getMessage());
+        }
+
+        this.mongoClient.close();
+        
+        return builder.build();
+    }
+    
+    @GET
+    @Path("/Student")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getStudentList() {
+        Response.ResponseBuilder builder;
+        DBCollection coll = this.db.getCollection("student");
+            
+            DBCursor cursor = coll.find();
+            
+        try {
+            ArrayList<Student> studentList = new ArrayList<Student>();
+            
+            while (cursor.hasNext()) {
+                studentList.add(this.mapper.studentJsonToObj(cursor.next().toString()));
+            }
+            
+            builder = Response.ok(this.mapper.studentListToJson(studentList));
+        } catch (Exception e) {
+            builder = Response.status(400).entity(e.getMessage());
         } finally {
             cursor.close();
         }

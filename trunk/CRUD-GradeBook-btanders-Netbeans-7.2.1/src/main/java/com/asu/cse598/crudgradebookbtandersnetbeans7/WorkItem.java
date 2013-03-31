@@ -10,17 +10,19 @@ package com.asu.cse598.crudgradebookbtandersnetbeans7;
  */
 public class WorkItem {
     public String _id;
-    public WorkItemType type;
+    public String workItemType_id;
     public int totalPoints;
     
     public WorkItem() {
-        this._id = null;
-        this.type = null;
+        this._id = "";
+        this.workItemType_id = "";
         this.totalPoints = 0;
     }
     
     @Override
     public String toString() {
-        return "ID: " + this._id + " | WorkItemType: " + this.type + " | Total Points: " + this.totalPoints;
+        return "ID: " + this._id + 
+                " | WorkItemType: " + this.workItemType_id + 
+                " | Total Points: " + this.totalPoints;
     }
 }
