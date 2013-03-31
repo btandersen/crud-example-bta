@@ -5,10 +5,11 @@
 package com.asu.cse598.gradebookclientapp;
 
 import com.asu.cse598.gradebooklibrary.GradeBookJsonMapper;
-import com.asu.cse598.gradebooklibrary.GradedWorkItem;
 import com.asu.cse598.gradebooklibrary.Student;
 import com.asu.cse598.gradebooklibrary.WorkItem;
 import com.asu.cse598.gradebooklibrary.WorkItemType;
+import com.sun.jersey.api.client.ClientResponse;
+import java.util.ArrayList;
 
 /**
  *
@@ -16,11 +17,86 @@ import com.asu.cse598.gradebooklibrary.WorkItemType;
  */
 public class GradeBookClientGUI extends javax.swing.JFrame {
 
+    private GradeBookProxy gradeBookProxy;
+    private GradeBookJsonMapper mapper;
+
     /**
      * Creates new form GradeBookClientGUI
      */
     public GradeBookClientGUI() {
         initComponents();
+        this.gradeBookProxy = new GradeBookProxy();
+        this.mapper = new GradeBookJsonMapper();
+        this.updateAll();
+    }
+    
+    private void updateAll() {
+        this.updateStudentList();
+        this.updateWorkItemTypeList();
+        this.updateWorkItemList();
+        this.repaint();
+    }
+
+    private void updateStudentList() {
+        ClientResponse response = this.gradeBookProxy.getStudentList(ClientResponse.class);
+
+        if (response.getStatus() == 200) {
+            try {
+                ArrayList<Student> studentList = this.mapper.studentListJsonToList(response.getEntity(String.class));
+                this.jComboBoxStudents.removeAllItems();
+                for (int i = 0; i < studentList.size(); ++i) {
+                    this.jComboBoxStudents.addItem(studentList.get(i)._id);
+                }
+                this.jLabelStudentListStatus.setText(response.getStatus() + "|" + response.getClientResponseStatus());
+            } catch (Exception e) {
+                this.jLabelStudentListStatus.setText(e.getMessage());
+            }
+        } else {
+            this.jLabelStudentListStatus.setText(response.getStatus() + "|" + response.getClientResponseStatus());
+        }
+
+        this.repaint();
+    }
+
+    private void updateWorkItemTypeList() {
+        ClientResponse response = this.gradeBookProxy.getWorkItemTypeList(ClientResponse.class);
+
+        if (response.getStatus() == 200) {
+            try {
+                ArrayList<WorkItemType> workItemTypeList = this.mapper.workItemTypeListJsonToList(response.getEntity(String.class));
+                this.jComboBoxWorkItemTypeList.removeAllItems();
+                for (int i = 0; i < workItemTypeList.size(); ++i) {
+                    this.jComboBoxWorkItemTypeList.addItem(workItemTypeList.get(i)._id);
+                }
+                this.jLabelGetWorkItemTypeStatus.setText(response.getStatus() + "|" + response.getClientResponseStatus());
+            } catch (Exception e) {
+                this.jLabelGetWorkItemTypeStatus.setText(e.getMessage());
+            }
+        } else {
+            this.jLabelGetWorkItemTypeStatus.setText(response.getStatus() + "|" + response.getClientResponseStatus());
+        }
+
+        this.repaint();
+    }
+    
+    private void updateWorkItemList() {
+        ClientResponse response = this.gradeBookProxy.getWorkItemList(ClientResponse.class);
+
+        if (response.getStatus() == 200) {
+            try {
+                ArrayList<WorkItem> workItemList = this.mapper.workItemListJsonToList(response.getEntity(String.class));
+                this.workItemListComboBox.removeAllItems();
+                for (int i = 0; i < workItemList.size(); ++i) {
+                    this.workItemListComboBox.addItem(workItemList.get(i)._id);
+                }
+            } catch (Exception e) {
+                // report status
+            }
+        } else {
+            // report status
+        }
+
+        this.repaint();
     }
 
     /**
@@ -32,21 +108,688 @@ public class GradeBookClientGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jTextFieldFirstName = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jTextFieldLastName = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jButtonCreateStudent = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        jTextFieldCreateStudentResult = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabelStudentId = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jComboBoxStudents = new javax.swing.JComboBox();
+        jLabel4 = new javax.swing.JLabel();
+        jLabelStudentListStatus = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jTextFieldWorkItem_Id = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        jTextFieldWorkItemType_GradWgt = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        jTextFieldWorkItemType_UnderGradWgt = new javax.swing.JTextField();
+        jButtonCreateWorkItemType = new javax.swing.JButton();
+        jLabel12 = new javax.swing.JLabel();
+        jLabelWorkItemType_Id = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabelCreateWorkItemTypeStatus = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel13 = new javax.swing.JLabel();
+        jComboBoxWorkItemTypeList = new javax.swing.JComboBox();
+        jLabel15 = new javax.swing.JLabel();
+        jLabelGradWgt = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        jLabelUnderGradWgt = new javax.swing.JLabel();
+        jButtonGetWorkItemType = new javax.swing.JButton();
+        jLabel16 = new javax.swing.JLabel();
+        jLabelGetWorkItemTypeStatus = new javax.swing.JLabel();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel18 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        workItemIdInput = new javax.swing.JTextField();
+        jLabel20 = new javax.swing.JLabel();
+        workItemTotalPointsInput = new javax.swing.JTextField();
+        workItemCreateButton = new javax.swing.JButton();
+        jLabel21 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        workItemListComboBox = new javax.swing.JComboBox();
+        jLabel23 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
+        selWorkItemTypeLabel = new javax.swing.JLabel();
+        selWorkItemPointsLabel = new javax.swing.JLabel();
+        workItemGetSelectedButton = new javax.swing.JButton();
+        workItemUpdateSelectedButton = new javax.swing.JButton();
+        workItemDeleteSelectedButton = new javax.swing.JButton();
+        jLabel25 = new javax.swing.JLabel();
+        workItemStatus = new javax.swing.JLabel();
+        workItemType_IdLabel = new javax.swing.JLabel();
+        workItemPointsLabel = new javax.swing.JLabel();
+        jPanel6 = new javax.swing.JPanel();
+        jLabel26 = new javax.swing.JLabel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jLabel1.setText("First Name");
+
+        jTextFieldFirstName.setText("firstname");
+
+        jLabel2.setText("Last Name");
+
+        jTextFieldLastName.setText("lastname");
+
+        jLabel3.setText("Status");
+
+        jButtonCreateStudent.setText("Create Student");
+        jButtonCreateStudent.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButtonCreateStudentMouseClicked(evt);
+            }
+        });
+
+        jLabel5.setText("Add Students");
+
+        jTextFieldCreateStudentResult.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jLabel6.setText("New Student ID");
+
+        jLabelStudentId.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButtonCreateStudent, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextFieldFirstName))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextFieldLastName))
+                    .addComponent(jTextFieldCreateStudentResult, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jLabelStudentId, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jTextFieldFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jTextFieldLastName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonCreateStudent)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelStudentId, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextFieldCreateStudentResult, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabelStudentId, jTextFieldCreateStudentResult});
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jLabel4.setText("Available Students (by ID)");
+
+        jLabelStudentListStatus.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jLabel7.setText("Status");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
+                    .addComponent(jComboBoxStudents, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabelStudentListStatus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jComboBoxStudents, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelStudentListStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jLabel8.setText("Add Work Item Types");
+
+        jLabel9.setText("Type (e.g. exam, assignment)");
+
+        jTextFieldWorkItem_Id.setText("type_name_here");
+
+        jLabel10.setText("Graduate Weight (e.g 0.25)");
+
+        jTextFieldWorkItemType_GradWgt.setText("0.25");
+
+        jLabel11.setText("Undergrad Weight (e.g 0.35)");
+
+        jTextFieldWorkItemType_UnderGradWgt.setText("0.35");
+
+        jButtonCreateWorkItemType.setText("Create Work Item Type");
+        jButtonCreateWorkItemType.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCreateWorkItemTypeActionPerformed(evt);
+            }
+        });
+
+        jLabel12.setText("Work Item Type ID");
+
+        jLabelWorkItemType_Id.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jLabel14.setText("Status");
+
+        jLabelCreateWorkItemTypeStatus.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButtonCreateWorkItemType, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel11)
+                        .addGap(15, 15, 15)
+                        .addComponent(jTextFieldWorkItemType_UnderGradWgt))
+                    .addComponent(jLabelWorkItemType_Id, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabelCreateWorkItemTypeStatus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel12)
+                    .addComponent(jLabel14)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel10))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextFieldWorkItemType_GradWgt)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jTextFieldWorkItem_Id, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))))
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(jTextFieldWorkItem_Id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(jTextFieldWorkItemType_GradWgt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(6, 6, 6)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11)
+                    .addComponent(jTextFieldWorkItemType_UnderGradWgt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonCreateWorkItemType)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel12)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelWorkItemType_Id, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel14)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelCreateWorkItemTypeStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jLabel13.setText("Available Work Item Types");
+
+        jLabel15.setText("Grad:");
+
+        jLabel17.setText("Undergrad:");
+
+        jButtonGetWorkItemType.setText("Get Selected Details");
+        jButtonGetWorkItemType.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonGetWorkItemTypeActionPerformed(evt);
+            }
+        });
+
+        jLabel16.setText("Status");
+
+        jLabelGetWorkItemTypeStatus.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButtonGetWorkItemType, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel15)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabelGradWgt))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel17)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabelUnderGradWgt))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jComboBoxWorkItemTypeList, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel16))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jLabelGetWorkItemTypeStatus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel13)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jComboBoxWorkItemTypeList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel15)
+                    .addComponent(jLabelGradWgt))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel17)
+                    .addComponent(jLabelUnderGradWgt))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonGetWorkItemType)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel16)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelGetWorkItemTypeStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jLabel18.setText("Work Items");
+
+        jLabel19.setText("Work Item ID (e.g. Assignment1)");
+
+        workItemIdInput.setText("name");
+
+        jLabel20.setText("Work Item Total Points (e.g. 100)");
+
+        workItemTotalPointsInput.setText("100");
+
+        workItemCreateButton.setText("Create");
+        workItemCreateButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                workItemCreateButtonActionPerformed(evt);
+            }
+        });
+
+        jLabel21.setText("Click <Create> to create with selected Work Item Type");
+
+        jLabel22.setText("Available Work Items");
+
+        jLabel23.setText("Type:");
+
+        jLabel24.setText("Points:");
+
+        workItemGetSelectedButton.setText("Get Selected Details");
+        workItemGetSelectedButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                workItemGetSelectedButtonActionPerformed(evt);
+            }
+        });
+
+        workItemUpdateSelectedButton.setText("Update Selected");
+        workItemUpdateSelectedButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                workItemUpdateSelectedButtonActionPerformed(evt);
+            }
+        });
+
+        workItemDeleteSelectedButton.setText("Delete Selected");
+        workItemDeleteSelectedButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                workItemDeleteSelectedButtonActionPerformed(evt);
+            }
+        });
+
+        jLabel25.setText("Status");
+
+        workItemStatus.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(jLabel20)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(workItemTotalPointsInput))
+                    .addComponent(jLabel21, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)
+                    .addComponent(jLabel18)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(jLabel19)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(workItemIdInput))
+                    .addComponent(workItemCreateButton)
+                    .addComponent(jLabel25)
+                    .addComponent(workItemStatus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel22, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel23)
+                            .addComponent(jLabel24))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(workItemPointsLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(workItemType_IdLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(selWorkItemPointsLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(selWorkItemTypeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(workItemListComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(workItemDeleteSelectedButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(workItemUpdateSelectedButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(workItemGetSelectedButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel19)
+                    .addComponent(workItemIdInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel20)
+                    .addComponent(workItemTotalPointsInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel21)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(workItemCreateButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel22)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(workItemListComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel23)
+                    .addComponent(selWorkItemTypeLabel)
+                    .addComponent(workItemType_IdLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel24)
+                    .addComponent(selWorkItemPointsLabel)
+                    .addComponent(workItemPointsLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(workItemGetSelectedButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(workItemUpdateSelectedButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(workItemDeleteSelectedButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel25)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(workItemStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel6.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jLabel26.setText("Graded Work Items");
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel26)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel26)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButtonCreateStudentMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonCreateStudentMouseClicked
+        ClientResponse response;
+
+        String fName = this.jTextFieldFirstName.getText();
+        String lName = this.jTextFieldLastName.getText();
+
+        Student student = new Student();
+        student.firstName = fName;
+        student.lastName = lName;
+
+        try {
+            response = this.gradeBookProxy.addStudent(this.mapper.studentObjToJson(student));
+            this.jTextFieldCreateStudentResult.setText(response.getStatus() + "|" + response.getClientResponseStatus());
+            if (response.getStatus() == 200) {
+                student = this.mapper.studentJsonToObj(response.getEntity(String.class));
+                this.jLabelStudentId.setText(student._id);
+            }
+            this.updateStudentList();
+        } catch (Exception e) {
+            this.jTextFieldCreateStudentResult.setText(e.getMessage());
+        }
+    }//GEN-LAST:event_jButtonCreateStudentMouseClicked
+
+    private void jButtonCreateWorkItemTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCreateWorkItemTypeActionPerformed
+        ClientResponse response;
+
+        try {
+            String workItemTypename = this.jTextFieldWorkItem_Id.getText();
+            double gradWgt = Double.parseDouble(this.jTextFieldWorkItemType_GradWgt.getText());
+            double underGradWgt = Double.parseDouble(this.jTextFieldWorkItemType_UnderGradWgt.getText());
+
+            WorkItemType workItemType = new WorkItemType();
+
+            workItemType._id = workItemTypename;
+            workItemType.graduateWeight = gradWgt;
+            workItemType.underGraduateWeight = underGradWgt;
+
+            response = this.gradeBookProxy.addWorkItemType(this.mapper.workItemTypeObjToJson(workItemType));
+            this.jLabelCreateWorkItemTypeStatus.setText(response.getStatus() + "|" + response.getClientResponseStatus());
+            if (response.getStatus() == 200) {
+                workItemType = this.mapper.workItemTypeJsonToObj(response.getEntity(String.class));
+                this.jLabelWorkItemType_Id.setText(workItemType._id);
+            }
+            this.updateWorkItemTypeList();
+        } catch (Exception e) {
+            this.jLabelCreateWorkItemTypeStatus.setText(e.getMessage());
+        }
+    }//GEN-LAST:event_jButtonCreateWorkItemTypeActionPerformed
+
+    private void jButtonGetWorkItemTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGetWorkItemTypeActionPerformed
+        ClientResponse response;
+        
+        try {
+            response = this.gradeBookProxy.getWorkItemType(ClientResponse.class, this.jComboBoxWorkItemTypeList.getSelectedItem().toString());
+            this.jLabelGetWorkItemTypeStatus.setText(response.getStatus() + "|" + response.getClientResponseStatus());
+            if (response.getStatus() == 200) {
+                WorkItemType workItemType = this.mapper.workItemTypeJsonToObj(response.getEntity(String.class));
+                this.jLabelGradWgt.setText(Double.toString(workItemType.graduateWeight));
+                this.jLabelUnderGradWgt.setText(Double.toString(workItemType.underGraduateWeight));
+            }
+        } catch (Exception e) {
+            this.jLabelGetWorkItemTypeStatus.setText(e.getMessage());
+        }
+    }//GEN-LAST:event_jButtonGetWorkItemTypeActionPerformed
+
+    private void workItemCreateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_workItemCreateButtonActionPerformed
+        ClientResponse response;
+
+        try {
+            WorkItem workItem = new WorkItem();
+            workItem._id = this.workItemIdInput.getText();
+            workItem.workItemType_id = this.jComboBoxWorkItemTypeList.getSelectedItem().toString();
+            workItem.totalPoints = Integer.parseInt(this.workItemTotalPointsInput.getText());
+
+            response = this.gradeBookProxy.addWorkItem(this.mapper.workItemObjToJson(workItem));
+            this.workItemStatus.setText(response.getStatus() + "|" + response.getClientResponseStatus());
+            if (response.getStatus() == 200) {
+                workItem = this.mapper.workItemJsonToObj(response.getEntity(String.class));
+                this.workItemType_IdLabel.setText(workItem.workItemType_id);
+                this.workItemPointsLabel.setText(Integer.toString(workItem.totalPoints));
+            }
+            this.updateWorkItemList();
+        } catch (Exception e) {
+            this.workItemStatus.setText(e.getMessage());
+        }
+    }//GEN-LAST:event_workItemCreateButtonActionPerformed
+
+    private void workItemGetSelectedButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_workItemGetSelectedButtonActionPerformed
+        ClientResponse response;
+        
+        try {
+            response = this.gradeBookProxy.getWorkItem(ClientResponse.class, this.workItemListComboBox.getSelectedItem().toString());
+            this.workItemStatus.setText(response.getStatus() + "|" + response.getClientResponseStatus());
+            if (response.getStatus() == 200) {
+                WorkItem workItem = this.mapper.workItemJsonToObj(response.getEntity(String.class));
+                this.workItemType_IdLabel.setText(workItem.workItemType_id);
+                this.workItemPointsLabel.setText(Integer.toString(workItem.totalPoints));
+            }
+        } catch (Exception e) {
+            this.workItemStatus.setText(e.getMessage());
+        }
+    }//GEN-LAST:event_workItemGetSelectedButtonActionPerformed
+
+    private void workItemUpdateSelectedButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_workItemUpdateSelectedButtonActionPerformed
+        ClientResponse response;
+
+        try {
+            WorkItem workItem = new WorkItem();
+            workItem._id = this.workItemListComboBox.getSelectedItem().toString();
+            workItem.workItemType_id = this.jComboBoxWorkItemTypeList.getSelectedItem().toString();
+            workItem.totalPoints = Integer.parseInt(this.workItemTotalPointsInput.getText());
+
+            response = this.gradeBookProxy.updateWorkItem(this.mapper.workItemObjToJson(workItem), workItem._id);
+            this.workItemStatus.setText(response.getStatus() + "|" + response.getClientResponseStatus());
+            if (response.getStatus() == 200) {
+                workItem = this.mapper.workItemJsonToObj(response.getEntity(String.class));
+                this.workItemType_IdLabel.setText(workItem.workItemType_id);
+                this.workItemPointsLabel.setText(Integer.toString(workItem.totalPoints));
+                this.updateWorkItemList();
+                this.workItemListComboBox.setSelectedItem(workItem._id);
+            }
+        } catch (Exception e) {
+            this.workItemStatus.setText(e.getMessage());
+        }
+    }//GEN-LAST:event_workItemUpdateSelectedButtonActionPerformed
+
+    private void workItemDeleteSelectedButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_workItemDeleteSelectedButtonActionPerformed
+        ClientResponse response;
+
+        try {
+            WorkItem workItem = new WorkItem();
+            workItem._id = this.workItemListComboBox.getSelectedItem().toString();
+
+            response = this.gradeBookProxy.deleteWorkItem(workItem._id);
+            this.workItemStatus.setText(response.getStatus() + "|" + response.getClientResponseStatus());
+            if (response.getStatus() == 200) {
+                this.workItemType_IdLabel.setText("");
+                this.workItemPointsLabel.setText("");
+                this.updateWorkItemList();
+            }
+        } catch (Exception e) {
+            this.workItemStatus.setText(e.getMessage());
+        }
+    }//GEN-LAST:event_workItemDeleteSelectedButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -83,5 +826,67 @@ public class GradeBookClientGUI extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonCreateStudent;
+    private javax.swing.JButton jButtonCreateWorkItemType;
+    private javax.swing.JButton jButtonGetWorkItemType;
+    private javax.swing.JComboBox jComboBoxStudents;
+    private javax.swing.JComboBox jComboBoxWorkItemTypeList;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabelCreateWorkItemTypeStatus;
+    private javax.swing.JLabel jLabelGetWorkItemTypeStatus;
+    private javax.swing.JLabel jLabelGradWgt;
+    private javax.swing.JLabel jLabelStudentId;
+    private javax.swing.JLabel jLabelStudentListStatus;
+    private javax.swing.JLabel jLabelUnderGradWgt;
+    private javax.swing.JLabel jLabelWorkItemType_Id;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JLabel jTextFieldCreateStudentResult;
+    private javax.swing.JTextField jTextFieldFirstName;
+    private javax.swing.JTextField jTextFieldLastName;
+    private javax.swing.JTextField jTextFieldWorkItemType_GradWgt;
+    private javax.swing.JTextField jTextFieldWorkItemType_UnderGradWgt;
+    private javax.swing.JTextField jTextFieldWorkItem_Id;
+    private javax.swing.JLabel selWorkItemPointsLabel;
+    private javax.swing.JLabel selWorkItemTypeLabel;
+    private javax.swing.JButton workItemCreateButton;
+    private javax.swing.JButton workItemDeleteSelectedButton;
+    private javax.swing.JButton workItemGetSelectedButton;
+    private javax.swing.JTextField workItemIdInput;
+    private javax.swing.JComboBox workItemListComboBox;
+    private javax.swing.JLabel workItemPointsLabel;
+    private javax.swing.JLabel workItemStatus;
+    private javax.swing.JTextField workItemTotalPointsInput;
+    private javax.swing.JLabel workItemType_IdLabel;
+    private javax.swing.JButton workItemUpdateSelectedButton;
     // End of variables declaration//GEN-END:variables
 }
