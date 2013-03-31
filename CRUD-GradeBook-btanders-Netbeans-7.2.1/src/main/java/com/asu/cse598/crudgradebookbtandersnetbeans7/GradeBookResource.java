@@ -399,7 +399,7 @@ public class GradeBookResource {
 
                 builder = Response.ok(mapper.workItemObjToJson(this.mapper.gradedWorkItemJsonToObj(doc.toString())));
             } else {
-                builder = Response.status(400).entity("Invalid type_id, must correspond to valid WorkItemType");
+                builder = Response.status(400).entity("Invalid Work Item, must correspond to valid WorkItem");
             }
         } catch (Exception e) {
             builder = Response.status(409).entity(e.getMessage());
