@@ -14,7 +14,7 @@ import com.sun.jersey.api.client.WebResource;
  * [GradeBook]<br>
  *  USAGE:
  * <pre>
- *        NewJerseyClient client = new NewJerseyClient();
+ *        GradeBookProxy client = new GradeBookProxy();
  *        Object response = client.XXX(...);
  *        // do whatever with response
  *        client.close();
@@ -22,12 +22,12 @@ import com.sun.jersey.api.client.WebResource;
  *
  * @author Brandon
  */
-public class NewJerseyClient {
+public class GradeBookProxy {
     private WebResource webResource;
     private Client client;
     private static final String BASE_URI = "http://localhost:8080/CRUD-GradeBook-btanders-Netbeans-7.2.1/webresources";
 
-    public NewJerseyClient() {
+    public GradeBookProxy() {
         com.sun.jersey.api.client.config.ClientConfig config = new com.sun.jersey.api.client.config.DefaultClientConfig();
         client = Client.create(config);
         webResource = client.resource(BASE_URI).path("GradeBook");
@@ -57,9 +57,21 @@ public class NewJerseyClient {
         return resource.accept(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
 
+    public <T> T getWorkItemList(Class<T> responseType) throws UniformInterfaceException {
+        WebResource resource = webResource;
+        resource = resource.path("WorkItem");
+        return resource.accept(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
+    }
+
     public <T> T getStudentList(Class<T> responseType) throws UniformInterfaceException {
         WebResource resource = webResource;
         resource = resource.path("Student");
+        return resource.accept(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
+    }
+
+    public <T> T getWorkItemTypeList(Class<T> responseType) throws UniformInterfaceException {
+        WebResource resource = webResource;
+        resource = resource.path("WorkItemType");
         return resource.accept(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
 
@@ -81,6 +93,12 @@ public class NewJerseyClient {
 
     public ClientResponse updateWorkItem(Object requestEntity, String _id) throws UniformInterfaceException {
         return webResource.path(java.text.MessageFormat.format("WorkItem/{0}", new Object[]{_id})).type(javax.ws.rs.core.MediaType.APPLICATION_JSON).put(ClientResponse.class, requestEntity);
+    }
+
+    public <T> T getGradedWorkItemList(Class<T> responseType) throws UniformInterfaceException {
+        WebResource resource = webResource;
+        resource = resource.path("GradedWorkItem");
+        return resource.accept(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
 
     public <T> T getWorkItemType(Class<T> responseType, String _id) throws UniformInterfaceException {

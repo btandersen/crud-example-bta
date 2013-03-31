@@ -15,7 +15,7 @@ public class TestClient {
 
     public static void main(String[] args) {
         GradeBookJsonMapper g = new GradeBookJsonMapper();
-        NewJerseyClient p = new NewJerseyClient();
+        GradeBookProxy p = new GradeBookProxy();
 
         WorkItemType wit = new WorkItemType();
         wit._id = "application";
