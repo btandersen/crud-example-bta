@@ -174,6 +174,35 @@ public class GradeBookResource {
         return builder.build();
     }
 
+    @GET
+    @Path("/WorkItemType")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getWorkItemTypeList() {
+        Response.ResponseBuilder builder;
+        
+        DBCollection coll = this.db.getCollection("workItemType");
+
+        DBCursor cursor = coll.find();
+
+        try {
+            ArrayList<WorkItemType> workItemTypeList = new ArrayList<WorkItemType>();
+
+            while (cursor.hasNext()) {
+                workItemTypeList.add(this.mapper.workItemTypeJsonToObj(cursor.next().toString()));
+            }
+
+            builder = Response.ok(this.mapper.workItemTypeListToJson(workItemTypeList));
+        } catch (Exception e) {
+            builder = Response.status(400).entity(e.getMessage());
+        } finally {
+            cursor.close();
+        }
+
+        this.mongoClient.close();
+
+        return builder.build();
+    }
+
     // WorkItem Resource
     @POST
     @Path("/WorkItem")
@@ -185,7 +214,7 @@ public class GradeBookResource {
 
         try {
             DBCollection coll = this.db.getCollection("workItem");
-            
+
             DBCollection workItemTypeColl = this.db.getCollection("workItemType");
 
             WorkItem workItem = mapper.workItemJsonToObj(workItemJson);
@@ -194,7 +223,7 @@ public class GradeBookResource {
 
             if (cursor.hasNext()) {
                 BasicDBObject doc = new BasicDBObject("_id", workItem._id).append("workItemType_id", workItem.workItemType_id).append("totalPoints", workItem.totalPoints);
-                
+
                 coll.insert(doc);
 
                 builder = Response.ok(mapper.workItemObjToJson(workItem));
@@ -254,7 +283,7 @@ public class GradeBookResource {
             WorkItem workItem = this.mapper.workItemJsonToObj(workItemJson);
 
             DBCursor workItemTypeCursor = workItemTypeColl.find(new BasicDBObject("_id", workItem.workItemType_id));
-            
+
             if (workItemTypeCursor.hasNext()) {
                 if (cursor.hasNext()) {
                     DBObject oldObj = cursor.next();
@@ -308,6 +337,35 @@ public class GradeBookResource {
         return builder.build();
     }
     
+    @GET
+    @Path("/WorkItem")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getWorkItemList() {
+        Response.ResponseBuilder builder;
+        
+        DBCollection coll = this.db.getCollection("workItem");
+
+        DBCursor cursor = coll.find();
+
+        try {
+            ArrayList<WorkItem> workItemList = new ArrayList<WorkItem>();
+
+            while (cursor.hasNext()) {
+                workItemList.add(this.mapper.workItemJsonToObj(cursor.next().toString()));
+            }
+
+            builder = Response.ok(this.mapper.workItemListToJson(workItemList));
+        } catch (Exception e) {
+            builder = Response.status(400).entity(e.getMessage());
+        } finally {
+            cursor.close();
+        }
+
+        this.mongoClient.close();
+
+        return builder.build();
+    }
+
     // GradedWorkItem Resource
     @POST
     @Path("/GradedWorkItem")
@@ -319,7 +377,7 @@ public class GradeBookResource {
 
         try {
             DBCollection coll = this.db.getCollection("gradedWorkItem");
-            
+
             DBCollection workItemColl = this.db.getCollection("workItem");
 
             GradedWorkItem gradedWorkItem = mapper.gradedWorkItemJsonToObj(gradedWorkItemJson);
@@ -327,15 +385,15 @@ public class GradeBookResource {
             DBCursor cursor = workItemColl.find(new BasicDBObject("_id", gradedWorkItem._id));
 
             if (cursor.hasNext()) {
-                BasicDBObject doc = new BasicDBObject("_id", gradedWorkItem._id + 
-                        "|" + gradedWorkItem.student_id)
+                BasicDBObject doc = new BasicDBObject("_id", gradedWorkItem._id
+                        + "|" + gradedWorkItem.student_id)
                         .append("workItemType_id", gradedWorkItem.workItemType_id)
                         .append("totalPoints", gradedWorkItem.totalPoints)
                         .append("student_id", gradedWorkItem.student_id)
                         .append("points", gradedWorkItem.points)
                         .append("comments", gradedWorkItem.comments)
-                        .append("appeal",gradedWorkItem.appeal);
-                
+                        .append("appeal", gradedWorkItem.appeal);
+
                 coll.insert(doc);
 
                 builder = Response.ok(mapper.workItemObjToJson(this.mapper.gradedWorkItemJsonToObj(doc.toString())));
@@ -395,14 +453,14 @@ public class GradeBookResource {
             if (cursor.hasNext()) {
                 DBObject oldObj = cursor.next();
 
-                coll.update(oldObj, new BasicDBObject("_id", gradedWorkItem._id + 
-                        "|" + gradedWorkItem.student_id)
+                coll.update(oldObj, new BasicDBObject("_id", gradedWorkItem._id
+                        + "|" + gradedWorkItem.student_id)
                         .append("workItemType_id", gradedWorkItem.workItemType_id)
                         .append("totalPoints", gradedWorkItem.totalPoints)
                         .append("student_id", gradedWorkItem.student_id)
                         .append("points", gradedWorkItem.points)
                         .append("comments", gradedWorkItem.comments)
-                        .append("appeal",gradedWorkItem.appeal));
+                        .append("appeal", gradedWorkItem.appeal));
 
                 builder = Response.ok(this.mapper.gradedWorkItemObjToJson(gradedWorkItem));
             } else {
@@ -448,6 +506,35 @@ public class GradeBookResource {
         return builder.build();
     }
     
+    @GET
+    @Path("/GradedWorkItem")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getGradedWorkItemList() {
+        Response.ResponseBuilder builder;
+        
+        DBCollection coll = this.db.getCollection("gradedWorkItem");
+
+        DBCursor cursor = coll.find();
+
+        try {
+            ArrayList<GradedWorkItem> gradedWorkItemList = new ArrayList<GradedWorkItem>();
+
+            while (cursor.hasNext()) {
+                gradedWorkItemList.add(this.mapper.gradedWorkItemJsonToObj(cursor.next().toString()));
+            }
+
+            builder = Response.ok(this.mapper.gradedWorkItemListToJson(gradedWorkItemList));
+        } catch (Exception e) {
+            builder = Response.status(400).entity(e.getMessage());
+        } finally {
+            cursor.close();
+        }
+
+        this.mongoClient.close();
+
+        return builder.build();
+    }
+
     // Student Resources
     @POST
     @Path("/Student")
@@ -455,12 +542,12 @@ public class GradeBookResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response addStudent(String studentJson) {
         Response.ResponseBuilder builder;
-        
+
         try {
             DBCollection coll = this.db.getCollection("student");
 
             Student student = this.mapper.studentJsonToObj(studentJson);
-            
+
             student.firstName = student.firstName.toLowerCase();
             student.lastName = student.lastName.toLowerCase();
 
@@ -477,26 +564,27 @@ public class GradeBookResource {
         }
 
         this.mongoClient.close();
-        
+
         return builder.build();
     }
-    
+
     @GET
     @Path("/Student")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getStudentList() {
         Response.ResponseBuilder builder;
+        
         DBCollection coll = this.db.getCollection("student");
-            
-            DBCursor cursor = coll.find();
-            
+
+        DBCursor cursor = coll.find();
+
         try {
             ArrayList<Student> studentList = new ArrayList<Student>();
-            
+
             while (cursor.hasNext()) {
                 studentList.add(this.mapper.studentJsonToObj(cursor.next().toString()));
             }
-            
+
             builder = Response.ok(this.mapper.studentListToJson(studentList));
         } catch (Exception e) {
             builder = Response.status(400).entity(e.getMessage());
@@ -505,7 +593,7 @@ public class GradeBookResource {
         }
 
         this.mongoClient.close();
-        
+
         return builder.build();
     }
 }
