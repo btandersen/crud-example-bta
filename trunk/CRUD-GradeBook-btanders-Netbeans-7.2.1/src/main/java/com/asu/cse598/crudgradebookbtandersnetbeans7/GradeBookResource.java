@@ -454,8 +454,7 @@ public class GradeBookResource {
             if (cursor.hasNext()) {
                 DBObject oldObj = cursor.next();
 
-                coll.update(oldObj, new BasicDBObject("_id", gradedWorkItem._id
-                        + "|" + gradedWorkItem.student_id)
+                coll.update(oldObj, new BasicDBObject("_id", gradedWorkItem._id)
                         .append("workItemType_id", gradedWorkItem.workItemType_id)
                         .append("totalPoints", gradedWorkItem.totalPoints)
                         .append("student_id", gradedWorkItem.student_id)
@@ -568,6 +567,35 @@ public class GradeBookResource {
 
         return builder.build();
     }
+    
+    @DELETE
+    @Path("/Student/{_id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deleteStudent(@PathParam("_id") String _id) {
+        Response.ResponseBuilder builder;
+
+        DBCollection coll = this.db.getCollection("student");
+
+        DBCursor cursor = coll.find(new BasicDBObject("_id", _id));
+
+        try {
+            if (cursor.hasNext()) {
+                coll.remove(new BasicDBObject("_id", _id));
+
+                builder = Response.ok();
+            } else {
+                builder = Response.status(404).entity("Not Found");
+            }
+        } catch (Exception e) {
+            builder = Response.status(500).entity(e.getMessage());
+        } finally {
+            cursor.close();
+        }
+
+        this.mongoClient.close();
+
+        return builder.build();
+    } 
 
     @GET
     @Path("/Student")
