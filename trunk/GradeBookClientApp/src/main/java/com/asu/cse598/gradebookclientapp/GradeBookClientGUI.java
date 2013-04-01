@@ -1065,7 +1065,11 @@ public class GradeBookClientGUI extends javax.swing.JFrame {
                     gradedWorkItem = this.mapper.gradedWorkItemJsonToObj(response.getEntity(String.class));
                     this.gradedWorkItemIdLabel.setText(gradedWorkItem._id);
                     this.gradedWorkItemTypeLabel.setText(gradedWorkItem.workItemType_id);
+                    this.gradedWorkItemStudentIdLabel.setText(gradedWorkItem.student_id);
                     this.gradedWorkItemTotalPointsLabel.setText(Integer.toString(gradedWorkItem.totalPoints));
+                    this.gradedWorkItemPointsLabel.setText(Integer.toString(gradedWorkItem.points));
+                    this.gradedWorkItemCommentsLabel.setText(gradedWorkItem.comments);
+                    this.gradedWorkItemAppealLabel.setText(gradedWorkItem.appeal);
                 }
             }
             
