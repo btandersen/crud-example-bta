@@ -49,11 +49,13 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jPanel3" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="jPanel1" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="jPanel2" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="jPanel4" alignment="0" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="jPanel3" alignment="0" max="32767" attributes="0"/>
+                  <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                      <Component id="jPanel2" alignment="0" max="32767" attributes="0"/>
+                      <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
+                  </Group>
+                  <Component id="jPanel4" alignment="0" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
@@ -217,13 +219,14 @@
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jLabel4" pref="138" max="32767" attributes="0"/>
+                      <Component id="jLabel4" max="32767" attributes="0"/>
                       <Component id="jComboBoxStudents" alignment="0" max="32767" attributes="0"/>
                       <Component id="jLabelStudentListStatus" alignment="0" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
                           <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
+                      <Component id="studentDeleteButton" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -240,6 +243,8 @@
                   <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jLabelStudentListStatus" min="-2" pref="26" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="studentDeleteButton" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -271,6 +276,14 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Status"/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="studentDeleteButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Delete Selected Student"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="studentDeleteButtonActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -454,6 +467,7 @@
                           <EmptySpace max="32767" attributes="0"/>
                           <Component id="jLabelUnderGradWgt" min="-2" max="-2" attributes="0"/>
                       </Group>
+                      <Component id="jLabelGetWorkItemTypeStatus" alignment="0" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -464,7 +478,8 @@
                           </Group>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
-                      <Component id="jLabelGetWorkItemTypeStatus" alignment="0" max="32767" attributes="0"/>
+                      <Component id="workItemTypeUpdateButton" alignment="0" max="32767" attributes="0"/>
+                      <Component id="workItemTypeDeleteButton" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -490,10 +505,14 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jButtonGetWorkItemType" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
+                  <Component id="workItemTypeUpdateButton" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="workItemTypeDeleteButton" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
                   <Component id="jLabel16" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jLabelGetWorkItemTypeStatus" min="-2" pref="26" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -546,6 +565,22 @@
               </Border>
             </Property>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="workItemTypeUpdateButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Update Selected"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="workItemTypeUpdateButtonActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="workItemTypeDeleteButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Delete Selected"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="workItemTypeDeleteButtonActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -813,7 +848,6 @@
                       </Group>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabel26" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel27" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="jLabel28" min="-2" max="-2" attributes="0"/>
@@ -822,6 +856,11 @@
                               </Group>
                           </Group>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="jLabel26" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="gradedWorkItemSubmitAppealButton" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -832,7 +871,10 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jLabel26" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jLabel26" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="gradedWorkItemSubmitAppealButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jLabel27" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
@@ -851,12 +893,12 @@
                       <Component id="gradedWorkItemAppealInput" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="gradedWorkItemCreateButton" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jLabel31" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
+                          <Component id="gradedWorkItemCreateButton" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jLabel31" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Component id="gradedWorkItemListComboBox" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="gradedWorkItemGetButton" min="-2" max="-2" attributes="0"/>
@@ -869,7 +911,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="gradedWorkItemStatus" min="-2" pref="26" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="jPanel7" max="32767" attributes="0"/>
+                      <Component id="jPanel7" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -941,16 +983,25 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Get Selected Details"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="gradedWorkItemGetButtonActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="gradedWorkItemUpdateButton">
           <Properties>
             <Property name="text" type="java.lang.String" value="Update Selected"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="gradedWorkItemUpdateButtonMouseClicked"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="gradedWorkItemDeleteButton">
           <Properties>
             <Property name="text" type="java.lang.String" value="Delete Selected"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="gradedWorkItemDeleteButtonActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel32">
           <Properties>
@@ -959,7 +1010,6 @@
         </Component>
         <Component class="javax.swing.JLabel" name="gradedWorkItemStatus">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jLabel33"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
                 <EtchetBorder/>
@@ -984,11 +1034,23 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jLabel38" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel39" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="gradedWorkItemAppealLabel" max="32767" attributes="0"/>
+                                  <Component id="gradedWorkItemCommentsLabel" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="jLabel35" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel34" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel40" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel36" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel37" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel33" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
@@ -997,17 +1059,7 @@
                                   <Component id="gradedWorkItemTypeLabel" max="32767" attributes="0"/>
                                   <Component id="gradedWorkItemIdLabel" max="32767" attributes="0"/>
                                   <Component id="gradedWorkItemStudentIdLabel" max="32767" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jLabel38" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel39" alignment="0" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="gradedWorkItemAppealLabel" max="32767" attributes="0"/>
-                                  <Component id="gradedWorkItemCommentsLabel" max="32767" attributes="0"/>
+                                  <Component id="gradedWorkItemGradePctLabel" alignment="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -1033,7 +1085,7 @@
                           <Component id="jLabel40" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="gradedWorkItemTypeLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel36" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="gradedWorkItemTotalPointsLabel" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -1044,6 +1096,11 @@
                           <Component id="gradedWorkItemPointsLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLabel33" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="gradedWorkItemGradePctLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace pref="35" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel38" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="gradedWorkItemCommentsLabel" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -1095,42 +1152,36 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="gradedWorkItemIdLabel">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="jLabel41"/>
-              </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="gradedWorkItemStudentIdLabel">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="jLabel42"/>
-              </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="gradedWorkItemTypeLabel">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="jLabel43"/>
-              </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="gradedWorkItemTotalPointsLabel">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="jLabel44"/>
-              </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="gradedWorkItemPointsLabel">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="jLabel45"/>
-              </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="gradedWorkItemCommentsLabel">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="jLabel46"/>
-              </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="gradedWorkItemAppealLabel">
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabel33">
               <Properties>
-                <Property name="text" type="java.lang.String" value="jLabel47"/>
+                <Property name="text" type="java.lang.String" value="Grade %:"/>
               </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="gradedWorkItemGradePctLabel">
             </Component>
           </SubComponents>
         </Container>
+        <Component class="javax.swing.JButton" name="gradedWorkItemSubmitAppealButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Submit Appeal"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="gradedWorkItemSubmitAppealButtonActionPerformed"/>
+          </Events>
+        </Component>
       </SubComponents>
     </Container>
   </SubComponents>

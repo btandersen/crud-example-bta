@@ -120,6 +120,28 @@ public class GradeBookClientGUI extends javax.swing.JFrame {
 
         this.repaint();
     }
+    
+    private void updateGradedWorkItemLabels(GradedWorkItem gradedWorkItem) {
+        if (null != gradedWorkItem) {
+            this.gradedWorkItemIdLabel.setText(gradedWorkItem._id);
+            this.gradedWorkItemTypeLabel.setText(gradedWorkItem.workItemType_id);
+            this.gradedWorkItemStudentIdLabel.setText(gradedWorkItem.student_id);
+            this.gradedWorkItemTotalPointsLabel.setText(Integer.toString(gradedWorkItem.totalPoints));
+            this.gradedWorkItemPointsLabel.setText(Integer.toString(gradedWorkItem.points));
+            this.gradedWorkItemGradePctLabel.setText(Double.toString(100*(double)gradedWorkItem.points/gradedWorkItem.totalPoints) + "%");
+            this.gradedWorkItemCommentsLabel.setText(gradedWorkItem.comments);
+            this.gradedWorkItemAppealLabel.setText(gradedWorkItem.appeal);
+            this.gradedWorkItemListComboBox.setSelectedItem(gradedWorkItem._id);
+        } else {
+            this.gradedWorkItemIdLabel.setText("");
+            this.gradedWorkItemTypeLabel.setText("");
+            this.gradedWorkItemStudentIdLabel.setText("");
+            this.gradedWorkItemTotalPointsLabel.setText("");
+            this.gradedWorkItemPointsLabel.setText("");
+            this.gradedWorkItemCommentsLabel.setText("");
+            this.gradedWorkItemAppealLabel.setText("");
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -146,6 +168,7 @@ public class GradeBookClientGUI extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabelStudentListStatus = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
+        studentDeleteButton = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -169,6 +192,8 @@ public class GradeBookClientGUI extends javax.swing.JFrame {
         jButtonGetWorkItemType = new javax.swing.JButton();
         jLabel16 = new javax.swing.JLabel();
         jLabelGetWorkItemTypeStatus = new javax.swing.JLabel();
+        workItemTypeUpdateButton = new javax.swing.JButton();
+        workItemTypeDeleteButton = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
@@ -222,6 +247,9 @@ public class GradeBookClientGUI extends javax.swing.JFrame {
         gradedWorkItemPointsLabel = new javax.swing.JLabel();
         gradedWorkItemCommentsLabel = new javax.swing.JLabel();
         gradedWorkItemAppealLabel = new javax.swing.JLabel();
+        jLabel33 = new javax.swing.JLabel();
+        gradedWorkItemGradePctLabel = new javax.swing.JLabel();
+        gradedWorkItemSubmitAppealButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -313,6 +341,13 @@ public class GradeBookClientGUI extends javax.swing.JFrame {
 
         jLabel7.setText("Status");
 
+        studentDeleteButton.setText("Delete Selected Student");
+        studentDeleteButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                studentDeleteButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -320,12 +355,13 @@ public class GradeBookClientGUI extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jComboBoxStudents, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabelStudentListStatus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel7)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(studentDeleteButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -339,6 +375,8 @@ public class GradeBookClientGUI extends javax.swing.JFrame {
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelStudentListStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(studentDeleteButton)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -451,6 +489,20 @@ public class GradeBookClientGUI extends javax.swing.JFrame {
 
         jLabelGetWorkItemTypeStatus.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
+        workItemTypeUpdateButton.setText("Update Selected");
+        workItemTypeUpdateButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                workItemTypeUpdateButtonActionPerformed(evt);
+            }
+        });
+
+        workItemTypeDeleteButton.setText("Delete Selected");
+        workItemTypeDeleteButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                workItemTypeDeleteButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -467,6 +519,7 @@ public class GradeBookClientGUI extends javax.swing.JFrame {
                         .addComponent(jLabel17)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabelUnderGradWgt))
+                    .addComponent(jLabelGetWorkItemTypeStatus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -474,7 +527,8 @@ public class GradeBookClientGUI extends javax.swing.JFrame {
                                 .addComponent(jComboBoxWorkItemTypeList, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addComponent(jLabel16))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jLabelGetWorkItemTypeStatus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(workItemTypeUpdateButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(workItemTypeDeleteButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -495,10 +549,14 @@ public class GradeBookClientGUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonGetWorkItemType)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(workItemTypeUpdateButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(workItemTypeDeleteButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel16)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelGetWorkItemTypeStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         jPanel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -664,14 +722,28 @@ public class GradeBookClientGUI extends javax.swing.JFrame {
         jLabel31.setText("Available Graded Work Items");
 
         gradedWorkItemGetButton.setText("Get Selected Details");
+        gradedWorkItemGetButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                gradedWorkItemGetButtonActionPerformed(evt);
+            }
+        });
 
         gradedWorkItemUpdateButton.setText("Update Selected");
+        gradedWorkItemUpdateButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                gradedWorkItemUpdateButtonMouseClicked(evt);
+            }
+        });
 
         gradedWorkItemDeleteButton.setText("Delete Selected");
+        gradedWorkItemDeleteButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                gradedWorkItemDeleteButtonActionPerformed(evt);
+            }
+        });
 
         jLabel32.setText("Status");
 
-        gradedWorkItemStatus.setText("jLabel33");
         gradedWorkItemStatus.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jPanel7.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -690,19 +762,7 @@ public class GradeBookClientGUI extends javax.swing.JFrame {
 
         jLabel40.setText("Type:");
 
-        gradedWorkItemIdLabel.setText("jLabel41");
-
-        gradedWorkItemStudentIdLabel.setText("jLabel42");
-
-        gradedWorkItemTypeLabel.setText("jLabel43");
-
-        gradedWorkItemTotalPointsLabel.setText("jLabel44");
-
-        gradedWorkItemPointsLabel.setText("jLabel45");
-
-        gradedWorkItemCommentsLabel.setText("jLabel46");
-
-        gradedWorkItemAppealLabel.setText("jLabel47");
+        jLabel33.setText("Grade %:");
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -713,26 +773,28 @@ public class GradeBookClientGUI extends javax.swing.JFrame {
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel38)
+                            .addComponent(jLabel39))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(gradedWorkItemAppealLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(gradedWorkItemCommentsLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel35)
                             .addComponent(jLabel34)
                             .addComponent(jLabel40)
                             .addComponent(jLabel36)
-                            .addComponent(jLabel37))
+                            .addComponent(jLabel37)
+                            .addComponent(jLabel33))
                         .addGap(31, 31, 31)
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(gradedWorkItemPointsLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(gradedWorkItemTotalPointsLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(gradedWorkItemTypeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(gradedWorkItemIdLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(gradedWorkItemStudentIdLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel38)
-                            .addComponent(jLabel39))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(gradedWorkItemAppealLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(gradedWorkItemCommentsLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(gradedWorkItemStudentIdLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(gradedWorkItemGradePctLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         jPanel7Layout.setVerticalGroup(
@@ -750,7 +812,7 @@ public class GradeBookClientGUI extends javax.swing.JFrame {
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel40)
                     .addComponent(gradedWorkItemTypeLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel36)
                     .addComponent(gradedWorkItemTotalPointsLabel))
@@ -760,6 +822,10 @@ public class GradeBookClientGUI extends javax.swing.JFrame {
                     .addComponent(gradedWorkItemPointsLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel33)
+                    .addComponent(gradedWorkItemGradePctLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel38)
                     .addComponent(gradedWorkItemCommentsLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -768,6 +834,13 @@ public class GradeBookClientGUI extends javax.swing.JFrame {
                     .addComponent(gradedWorkItemAppealLabel))
                 .addContainerGap())
         );
+
+        gradedWorkItemSubmitAppealButton.setText("Submit Appeal");
+        gradedWorkItemSubmitAppealButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                gradedWorkItemSubmitAppealButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -802,20 +875,25 @@ public class GradeBookClientGUI extends javax.swing.JFrame {
                                 .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel26)
                             .addComponent(jLabel27)
                             .addGroup(jPanel6Layout.createSequentialGroup()
                                 .addComponent(jLabel28)
                                 .addGap(29, 29, 29)
                                 .addComponent(gradedWorkItemPointsInput, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(jLabel26)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(gradedWorkItemSubmitAppealButton)))
                 .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel26)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel26)
+                    .addComponent(gradedWorkItemSubmitAppealButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel27)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -831,12 +909,12 @@ public class GradeBookClientGUI extends javax.swing.JFrame {
                     .addComponent(jLabel30)
                     .addComponent(gradedWorkItemAppealInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(gradedWorkItemCreateButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel31)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(gradedWorkItemCreateButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel31)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(gradedWorkItemListComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(gradedWorkItemGetButton)
@@ -848,7 +926,7 @@ public class GradeBookClientGUI extends javax.swing.JFrame {
                         .addComponent(jLabel32)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(gradedWorkItemStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -878,11 +956,12 @@ public class GradeBookClientGUI extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -1063,13 +1142,7 @@ public class GradeBookClientGUI extends javax.swing.JFrame {
 
                 if (response.getStatus() == 200) {
                     gradedWorkItem = this.mapper.gradedWorkItemJsonToObj(response.getEntity(String.class));
-                    this.gradedWorkItemIdLabel.setText(gradedWorkItem._id);
-                    this.gradedWorkItemTypeLabel.setText(gradedWorkItem.workItemType_id);
-                    this.gradedWorkItemStudentIdLabel.setText(gradedWorkItem.student_id);
-                    this.gradedWorkItemTotalPointsLabel.setText(Integer.toString(gradedWorkItem.totalPoints));
-                    this.gradedWorkItemPointsLabel.setText(Integer.toString(gradedWorkItem.points));
-                    this.gradedWorkItemCommentsLabel.setText(gradedWorkItem.comments);
-                    this.gradedWorkItemAppealLabel.setText(gradedWorkItem.appeal);
+                    this.updateGradedWorkItemLabels(gradedWorkItem);
                 }
             }
             
@@ -1078,6 +1151,160 @@ public class GradeBookClientGUI extends javax.swing.JFrame {
             this.gradedWorkItemStatus.setText(e.getMessage());
         }
     }//GEN-LAST:event_gradedWorkItemCreateButtonActionPerformed
+
+    private void gradedWorkItemGetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gradedWorkItemGetButtonActionPerformed
+        ClientResponse response;
+
+        try {
+            response = this.gradeBookProxy.getGradedWorkItem(ClientResponse.class, this.gradedWorkItemListComboBox.getSelectedItem().toString());
+            this.gradedWorkItemStatus.setText(response.getStatus() + "|" + response.getClientResponseStatus());
+            if (response.getStatus() == 200) {
+                GradedWorkItem gradedWorkItem = this.mapper.gradedWorkItemJsonToObj(response.getEntity(String.class));
+                this.updateGradedWorkItemLabels(gradedWorkItem);
+            }
+        } catch (Exception e) {
+            this.workItemStatus.setText(e.getMessage());
+        }
+    }//GEN-LAST:event_gradedWorkItemGetButtonActionPerformed
+
+    private void gradedWorkItemUpdateButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_gradedWorkItemUpdateButtonMouseClicked
+        ClientResponse response;
+
+        try {
+            response = this.gradeBookProxy.getGradedWorkItem(ClientResponse.class, this.gradedWorkItemListComboBox.getSelectedItem().toString());
+
+            this.gradedWorkItemStatus.setText(response.getStatus() + "|" + response.getClientResponseStatus());
+            
+            if (response.getStatus() == 200) {
+                GradedWorkItem gradedWorkItem = this.mapper.gradedWorkItemJsonToObj(response.getEntity(String.class));
+                
+                gradedWorkItem.points = Integer.parseInt(this.gradedWorkItemPointsInput.getText());
+                gradedWorkItem.comments = this.gradedWorkItemCommentsInput.getText();
+                gradedWorkItem.appeal = this.gradedWorkItemAppealInput.getText();
+                
+                response = this.gradeBookProxy.updateGradedWorkItem(this.mapper.gradedWorkItemObjToJson(gradedWorkItem), gradedWorkItem._id);
+                
+                this.gradedWorkItemStatus.setText(response.getStatus() + "|" + response.getClientResponseStatus());
+                
+                if (response.getStatus() == 200) {
+                    this.updateGradedWorkItemLabels(gradedWorkItem);
+                    this.gradedWorkItemListComboBox.setSelectedItem(gradedWorkItem._id);
+                } else {
+                    // update failed
+                }
+            } else {
+                // 404 mot found
+            }
+        } catch (Exception e) {
+            this.gradedWorkItemStatus.setText(e.getMessage());
+        }
+    }//GEN-LAST:event_gradedWorkItemUpdateButtonMouseClicked
+
+    private void gradedWorkItemDeleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gradedWorkItemDeleteButtonActionPerformed
+        ClientResponse response;
+
+        try {
+            response = this.gradeBookProxy.deleteGradedWorkItem(this.gradedWorkItemListComboBox.getSelectedItem().toString());
+            this.gradedWorkItemStatus.setText(response.getStatus() + "|" + response.getClientResponseStatus());
+            if (response.getStatus() == 200) {
+                this.updateGradedWorkItemLabels(null);
+                this.updateGradedWorkItemList();
+            }
+        } catch (Exception e) {
+            this.gradedWorkItemStatus.setText(e.getMessage());
+        }
+    }//GEN-LAST:event_gradedWorkItemDeleteButtonActionPerformed
+
+    private void studentDeleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentDeleteButtonActionPerformed
+        ClientResponse response;
+
+        try {
+            response = this.gradeBookProxy.deleteStudent(this.jComboBoxStudents.getSelectedItem().toString());
+            if (response.getStatus() == 200) {
+                this.updateStudentList();
+            }
+        } catch (Exception e) {
+            this.jLabelStudentListStatus.setText(e.getMessage());
+        }
+    }//GEN-LAST:event_studentDeleteButtonActionPerformed
+
+    private void workItemTypeUpdateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_workItemTypeUpdateButtonActionPerformed
+        ClientResponse response;
+
+        try {
+            response = this.gradeBookProxy.getWorkItemType(ClientResponse.class, this.jComboBoxWorkItemTypeList.getSelectedItem().toString());
+
+            this.jLabelGetWorkItemTypeStatus.setText(response.getStatus() + "|" + response.getClientResponseStatus());
+            
+            if (response.getStatus() == 200) {
+                WorkItemType workItemType = this.mapper.workItemTypeJsonToObj(response.getEntity(String.class));
+                
+                workItemType.graduateWeight = Double.parseDouble(this.jTextFieldWorkItemType_GradWgt.getText());
+                workItemType.underGraduateWeight = Double.parseDouble(this.jTextFieldWorkItemType_UnderGradWgt.getText());
+                
+                response = this.gradeBookProxy.updateWorkItemType(this.mapper.workItemTypeObjToJson(workItemType), workItemType._id);
+                
+                this.jLabelGetWorkItemTypeStatus.setText(response.getStatus() + "|" + response.getClientResponseStatus());
+                
+                if (response.getStatus() == 200) {
+                    workItemType = this.mapper.workItemTypeJsonToObj(response.getEntity(String.class));
+                    this.jLabelGradWgt.setText(Double.toString(workItemType.graduateWeight));
+                    this.jLabelUnderGradWgt.setText(Double.toString(workItemType.underGraduateWeight));
+                    this.jComboBoxWorkItemTypeList.setSelectedItem(workItemType._id);
+                } else {
+                    // update failed
+                }
+            } else {
+                // 404 mot found
+            }
+        } catch (Exception e) {
+            this.jLabelGetWorkItemTypeStatus.setText(e.getMessage());
+        }
+    }//GEN-LAST:event_workItemTypeUpdateButtonActionPerformed
+
+    private void workItemTypeDeleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_workItemTypeDeleteButtonActionPerformed
+        ClientResponse response;
+
+        try {
+            response = this.gradeBookProxy.deleteWorkItemType(this.jComboBoxWorkItemTypeList.getSelectedItem().toString());
+            if (response.getStatus() == 200) {
+                this.updateWorkItemTypeList();
+            }
+        } catch (Exception e) {
+            this.jLabelGetWorkItemTypeStatus.setText(e.getMessage());
+        }
+    }//GEN-LAST:event_workItemTypeDeleteButtonActionPerformed
+
+    private void gradedWorkItemSubmitAppealButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gradedWorkItemSubmitAppealButtonActionPerformed
+        ClientResponse response;
+
+        try {
+            response = this.gradeBookProxy.getGradedWorkItem(ClientResponse.class, this.gradedWorkItemListComboBox.getSelectedItem().toString());
+
+            this.gradedWorkItemStatus.setText(response.getStatus() + "|" + response.getClientResponseStatus());
+            
+            if (response.getStatus() == 200) {
+                GradedWorkItem gradedWorkItem = this.mapper.gradedWorkItemJsonToObj(response.getEntity(String.class));
+                
+                gradedWorkItem.appeal = this.gradedWorkItemAppealInput.getText();
+                
+                response = this.gradeBookProxy.updateGradedWorkItem(this.mapper.gradedWorkItemObjToJson(gradedWorkItem), gradedWorkItem._id);
+                
+                this.gradedWorkItemStatus.setText(response.getStatus() + "|" + response.getClientResponseStatus());
+                
+                if (response.getStatus() == 200) {
+                    this.updateGradedWorkItemLabels(gradedWorkItem);
+                    this.gradedWorkItemListComboBox.setSelectedItem(gradedWorkItem._id);
+                } else {
+                    // update failed
+                }
+            } else {
+                // 404 mot found
+            }
+        } catch (Exception e) {
+            this.gradedWorkItemStatus.setText(e.getMessage());
+        }
+    }//GEN-LAST:event_gradedWorkItemSubmitAppealButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1121,12 +1348,14 @@ public class GradeBookClientGUI extends javax.swing.JFrame {
     private javax.swing.JButton gradedWorkItemCreateButton;
     private javax.swing.JButton gradedWorkItemDeleteButton;
     private javax.swing.JButton gradedWorkItemGetButton;
+    private javax.swing.JLabel gradedWorkItemGradePctLabel;
     private javax.swing.JLabel gradedWorkItemIdLabel;
     private javax.swing.JComboBox gradedWorkItemListComboBox;
     private javax.swing.JTextField gradedWorkItemPointsInput;
     private javax.swing.JLabel gradedWorkItemPointsLabel;
     private javax.swing.JLabel gradedWorkItemStatus;
     private javax.swing.JLabel gradedWorkItemStudentIdLabel;
+    private javax.swing.JButton gradedWorkItemSubmitAppealButton;
     private javax.swing.JLabel gradedWorkItemTotalPointsLabel;
     private javax.swing.JLabel gradedWorkItemTypeLabel;
     private javax.swing.JButton gradedWorkItemUpdateButton;
@@ -1161,6 +1390,7 @@ public class GradeBookClientGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel36;
@@ -1196,6 +1426,7 @@ public class GradeBookClientGUI extends javax.swing.JFrame {
     private javax.swing.JTextField jTextFieldWorkItem_Id;
     private javax.swing.JLabel selWorkItemPointsLabel;
     private javax.swing.JLabel selWorkItemTypeLabel;
+    private javax.swing.JButton studentDeleteButton;
     private javax.swing.JButton workItemCreateButton;
     private javax.swing.JButton workItemDeleteSelectedButton;
     private javax.swing.JButton workItemGetSelectedButton;
@@ -1204,6 +1435,8 @@ public class GradeBookClientGUI extends javax.swing.JFrame {
     private javax.swing.JLabel workItemPointsLabel;
     private javax.swing.JLabel workItemStatus;
     private javax.swing.JTextField workItemTotalPointsInput;
+    private javax.swing.JButton workItemTypeDeleteButton;
+    private javax.swing.JButton workItemTypeUpdateButton;
     private javax.swing.JLabel workItemType_IdLabel;
     private javax.swing.JButton workItemUpdateSelectedButton;
     // End of variables declaration//GEN-END:variables
