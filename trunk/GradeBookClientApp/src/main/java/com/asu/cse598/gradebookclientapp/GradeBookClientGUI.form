@@ -779,33 +779,16 @@
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jLabel26" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabel27" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="jLabel28" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jTextField1" min="-2" pref="50" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="jLabel29" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jTextField2" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="jLabel30" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jTextField3" min="-2" max="-2" attributes="0"/>
-                      </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                              <Component id="jButton1" alignment="0" max="32767" attributes="0"/>
+                              <Component id="gradedWorkItemCreateButton" alignment="0" max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                      <Component id="jLabel33" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="jButton4" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="jButton3" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="jButton2" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="jComboBox1" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="gradedWorkItemStatus" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="gradedWorkItemDeleteButton" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="gradedWorkItemUpdateButton" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="gradedWorkItemGetButton" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="gradedWorkItemListComboBox" alignment="0" max="32767" attributes="0"/>
                                       <Component id="jLabel31" alignment="0" max="32767" attributes="0"/>
                                   </Group>
                                   <Component id="jLabel32" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -813,6 +796,32 @@
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jPanel7" max="32767" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jLabel29" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel30" alignment="0" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="gradedWorkItemAppealInput" alignment="0" max="32767" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <Component id="gradedWorkItemCommentsInput" min="-2" pref="326" max="-2" attributes="0"/>
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jLabel26" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel27" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jLabel28" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+                                  <Component id="gradedWorkItemPointsInput" min="-2" pref="45" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -829,36 +838,36 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel28" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jTextField1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="gradedWorkItemPointsInput" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel29" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jTextField2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="gradedWorkItemCommentsInput" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel30" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jTextField3" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="gradedWorkItemAppealInput" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                  <Component id="gradedWorkItemCreateButton" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jLabel31" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Group type="102" attributes="0">
-                          <Component id="jComboBox1" min="-2" max="-2" attributes="0"/>
+                          <Component id="gradedWorkItemListComboBox" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+                          <Component id="gradedWorkItemGetButton" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jButton3" min="-2" max="-2" attributes="0"/>
+                          <Component id="gradedWorkItemUpdateButton" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jButton4" min="-2" max="-2" attributes="0"/>
+                          <Component id="gradedWorkItemDeleteButton" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jLabel32" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jLabel33" min="-2" pref="26" max="-2" attributes="0"/>
+                          <Component id="gradedWorkItemStatus" min="-2" pref="26" max="-2" attributes="0"/>
                       </Group>
                       <Component id="jPanel7" max="32767" attributes="0"/>
                   </Group>
@@ -883,7 +892,7 @@
             <Property name="text" type="java.lang.String" value="Points Received:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField1">
+        <Component class="javax.swing.JTextField" name="gradedWorkItemPointsInput">
           <Properties>
             <Property name="text" type="java.lang.String" value="0"/>
           </Properties>
@@ -893,9 +902,9 @@
             <Property name="text" type="java.lang.String" value="Instructor Comments:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField2">
+        <Component class="javax.swing.JTextField" name="gradedWorkItemCommentsInput">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jTextField2"/>
+            <Property name="text" type="java.lang.String" value="comment"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel30">
@@ -903,44 +912,42 @@
             <Property name="text" type="java.lang.String" value="Student Appeal:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField3">
+        <Component class="javax.swing.JTextField" name="gradedWorkItemAppealInput">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jTextField3"/>
+            <Property name="text" type="java.lang.String" value="appeal"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton1">
+        <Component class="javax.swing.JButton" name="gradedWorkItemCreateButton">
           <Properties>
             <Property name="text" type="java.lang.String" value="Create"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="gradedWorkItemCreateButtonActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel31">
           <Properties>
             <Property name="text" type="java.lang.String" value="Available Graded Work Items"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="jComboBox1">
+        <Component class="javax.swing.JComboBox" name="gradedWorkItemListComboBox">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="4">
-                <StringItem index="0" value="Item 1"/>
-                <StringItem index="1" value="Item 2"/>
-                <StringItem index="2" value="Item 3"/>
-                <StringItem index="3" value="Item 4"/>
-              </StringArray>
+              <StringArray count="0"/>
             </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton2">
+        <Component class="javax.swing.JButton" name="gradedWorkItemGetButton">
           <Properties>
             <Property name="text" type="java.lang.String" value="Get Selected Details"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton3">
+        <Component class="javax.swing.JButton" name="gradedWorkItemUpdateButton">
           <Properties>
             <Property name="text" type="java.lang.String" value="Update Selected"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton4">
+        <Component class="javax.swing.JButton" name="gradedWorkItemDeleteButton">
           <Properties>
             <Property name="text" type="java.lang.String" value="Delete Selected"/>
           </Properties>
@@ -950,7 +957,7 @@
             <Property name="text" type="java.lang.String" value="Status"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel33">
+        <Component class="javax.swing.JLabel" name="gradedWorkItemStatus">
           <Properties>
             <Property name="text" type="java.lang.String" value="jLabel33"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -985,11 +992,11 @@
                               </Group>
                               <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jLabel45" max="32767" attributes="0"/>
-                                  <Component id="jLabel44" max="32767" attributes="0"/>
-                                  <Component id="jLabel43" max="32767" attributes="0"/>
-                                  <Component id="jLabel41" max="32767" attributes="0"/>
-                                  <Component id="jLabel42" max="32767" attributes="0"/>
+                                  <Component id="gradedWorkItemPointsLabel" max="32767" attributes="0"/>
+                                  <Component id="gradedWorkItemTotalPointsLabel" max="32767" attributes="0"/>
+                                  <Component id="gradedWorkItemTypeLabel" max="32767" attributes="0"/>
+                                  <Component id="gradedWorkItemIdLabel" max="32767" attributes="0"/>
+                                  <Component id="gradedWorkItemStudentIdLabel" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
@@ -999,8 +1006,8 @@
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jLabel47" max="32767" attributes="0"/>
-                                  <Component id="jLabel46" max="32767" attributes="0"/>
+                                  <Component id="gradedWorkItemAppealLabel" max="32767" attributes="0"/>
+                                  <Component id="gradedWorkItemCommentsLabel" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -1014,37 +1021,37 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel34" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel41" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="gradedWorkItemIdLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel35" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel42" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="gradedWorkItemStudentIdLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel40" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel43" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="gradedWorkItemTypeLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel36" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel44" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="gradedWorkItemTotalPointsLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel37" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel45" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="gradedWorkItemPointsLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel38" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel46" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="gradedWorkItemCommentsLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel39" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel47" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="gradedWorkItemAppealLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -1087,37 +1094,37 @@
                 <Property name="text" type="java.lang.String" value="Type:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel41">
+            <Component class="javax.swing.JLabel" name="gradedWorkItemIdLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="jLabel41"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel42">
+            <Component class="javax.swing.JLabel" name="gradedWorkItemStudentIdLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="jLabel42"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel43">
+            <Component class="javax.swing.JLabel" name="gradedWorkItemTypeLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="jLabel43"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel44">
+            <Component class="javax.swing.JLabel" name="gradedWorkItemTotalPointsLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="jLabel44"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel45">
+            <Component class="javax.swing.JLabel" name="gradedWorkItemPointsLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="jLabel45"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel46">
+            <Component class="javax.swing.JLabel" name="gradedWorkItemCommentsLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="jLabel46"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel47">
+            <Component class="javax.swing.JLabel" name="gradedWorkItemAppealLabel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="jLabel47"/>
               </Properties>
