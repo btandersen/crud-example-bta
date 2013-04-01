@@ -20,7 +20,7 @@ import com.sun.jersey.api.client.WebResource;
  *        client.close();
  * </pre>
  *
- * @author Brandon
+ * @author bandersen
  */
 public class GradeBookProxy {
     private WebResource webResource;
@@ -81,6 +81,10 @@ public class GradeBookProxy {
 
     public ClientResponse deleteGradedWorkItem(String _id) throws UniformInterfaceException {
         return webResource.path(java.text.MessageFormat.format("GradedWorkItem/{0}", new Object[]{_id})).delete(ClientResponse.class);
+    }
+
+    public ClientResponse deleteStudent(String _id) throws UniformInterfaceException {
+        return webResource.path(java.text.MessageFormat.format("Student/{0}", new Object[]{_id})).delete(ClientResponse.class);
     }
 
     public ClientResponse updateWorkItemType(Object requestEntity, String _id) throws UniformInterfaceException {
