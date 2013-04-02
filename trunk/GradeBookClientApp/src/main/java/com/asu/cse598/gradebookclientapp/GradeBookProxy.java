@@ -1,6 +1,12 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Brandon Andersen
+ * 1000878186
+ * CSE 598
+ * Spring 2013
+ * Professor Calliss
+ * 
+ * Proxy Class for interactions between java client and CRUD resources
+ * 
  */
 package com.asu.cse598.gradebookclientapp;
 
@@ -11,8 +17,7 @@ import com.sun.jersey.api.client.WebResource;
 
 /**
  * Jersey REST client generated for REST resource:GradeBookResource
- * [GradeBook]<br>
- *  USAGE:
+ * [GradeBook]<br> USAGE:
  * <pre>
  *        GradeBookProxy client = new GradeBookProxy();
  *        Object response = client.XXX(...);
@@ -23,6 +28,7 @@ import com.sun.jersey.api.client.WebResource;
  * @author bandersen
  */
 public class GradeBookProxy {
+
     private WebResource webResource;
     private Client client;
     private static final String BASE_URI = "http://localhost:8080/CRUD-GradeBook-btanders-Netbeans-7.2.1/webresources";
@@ -122,5 +128,4 @@ public class GradeBookProxy {
     public void close() {
         client.destroy();
     }
-    
 }
