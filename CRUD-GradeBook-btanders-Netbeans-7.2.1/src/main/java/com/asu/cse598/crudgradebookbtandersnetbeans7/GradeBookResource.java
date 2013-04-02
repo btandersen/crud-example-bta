@@ -4,6 +4,8 @@
  * CSE 598
  * Spring 2013
  * Professor Calliss
+ * 
+ * The Grade Book Resource class
  */
 package com.asu.cse598.crudgradebookbtandersnetbeans7;
 
@@ -332,7 +334,7 @@ public class GradeBookResource {
         this.mongoClient.close();
         return builder.build();
     }
-    
+
     // get a list of work items in db
     @GET
     @Path("/WorkItem")
@@ -496,7 +498,7 @@ public class GradeBookResource {
         this.mongoClient.close();
         return builder.build();
     }
-    
+
     // get a list of graded work items
     @GET
     @Path("/GradedWorkItem")
@@ -555,7 +557,7 @@ public class GradeBookResource {
         this.mongoClient.close();
         return builder.build();
     }
-    
+
     // delete the specified student
     @DELETE
     @Path("/Student/{_id}")
@@ -582,7 +584,7 @@ public class GradeBookResource {
         }
         this.mongoClient.close();
         return builder.build();
-    } 
+    }
 
     // get a list of all students
     @GET
