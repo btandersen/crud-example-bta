@@ -543,7 +543,7 @@ public class GradeBookResource {
             student.firstName = student.firstName.toLowerCase();
             student.lastName = student.lastName.toLowerCase();
             // create the new student json document
-            BasicDBObject doc = new BasicDBObject("_id", student.firstName.substring(0, 2) + student.lastName.substring(0, 6))
+            BasicDBObject doc = new BasicDBObject("_id", student.firstName + "_" + student.lastName)
                     .append("firstName", student.firstName)
                     .append("lastName", student.lastName);
             // insert
