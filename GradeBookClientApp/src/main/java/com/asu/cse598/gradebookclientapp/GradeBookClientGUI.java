@@ -1,6 +1,11 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Brandon Andersen
+ * 1000878186
+ * CSE 598
+ * Spring 2013
+ * Professor Calliss
+ * 
+ * Grade Book Client GUI
  */
 package com.asu.cse598.gradebookclientapp;
 
@@ -18,8 +23,8 @@ import java.util.ArrayList;
  */
 public class GradeBookClientGUI extends javax.swing.JFrame {
 
-    private GradeBookProxy gradeBookProxy;
-    private GradeBookJsonMapper mapper;
+    private GradeBookProxy gradeBookProxy; // proxy to resources
+    private GradeBookJsonMapper mapper; // json to obj mapper
 
     /**
      * Creates new form GradeBookClientGUI
@@ -30,7 +35,8 @@ public class GradeBookClientGUI extends javax.swing.JFrame {
         this.mapper = new GradeBookJsonMapper();
         this.updateAll();
     }
-    
+
+    // update all the drop down lists
     private void updateAll() {
         this.updateStudentList();
         this.updateWorkItemTypeList();
@@ -39,9 +45,9 @@ public class GradeBookClientGUI extends javax.swing.JFrame {
         this.repaint();
     }
 
+    // update the student list
     private void updateStudentList() {
         ClientResponse response = this.gradeBookProxy.getStudentList(ClientResponse.class);
-
         if (response.getStatus() == 200) {
             try {
                 ArrayList<Student> studentList = this.mapper.studentListJsonToList(response.getEntity(String.class));
@@ -56,13 +62,12 @@ public class GradeBookClientGUI extends javax.swing.JFrame {
         } else {
             this.jLabelStudentListStatus.setText(response.getStatus() + "|" + response.getClientResponseStatus());
         }
-
         this.repaint();
     }
 
+    // update the work item type list
     private void updateWorkItemTypeList() {
         ClientResponse response = this.gradeBookProxy.getWorkItemTypeList(ClientResponse.class);
-
         if (response.getStatus() == 200) {
             try {
                 ArrayList<WorkItemType> workItemTypeList = this.mapper.workItemTypeListJsonToList(response.getEntity(String.class));
@@ -77,13 +82,12 @@ public class GradeBookClientGUI extends javax.swing.JFrame {
         } else {
             this.jLabelGetWorkItemTypeStatus.setText(response.getStatus() + "|" + response.getClientResponseStatus());
         }
-
         this.repaint();
     }
-    
+
+    // update the work item list
     private void updateWorkItemList() {
         ClientResponse response = this.gradeBookProxy.getWorkItemList(ClientResponse.class);
-
         if (response.getStatus() == 200) {
             try {
                 ArrayList<WorkItem> workItemList = this.mapper.workItemListJsonToList(response.getEntity(String.class));
@@ -92,18 +96,14 @@ public class GradeBookClientGUI extends javax.swing.JFrame {
                     this.workItemListComboBox.addItem(workItemList.get(i)._id);
                 }
             } catch (Exception e) {
-                // report status
             }
-        } else {
-            // report status
         }
-
         this.repaint();
     }
-    
+
+    // update the graded work item list
     private void updateGradedWorkItemList() {
         ClientResponse response = this.gradeBookProxy.getGradedWorkItemList(ClientResponse.class);
-
         if (response.getStatus() == 200) {
             try {
                 ArrayList<GradedWorkItem> gradedWorkItemList = this.mapper.gradedWorkItemListJsonToList(response.getEntity(String.class));
@@ -112,15 +112,12 @@ public class GradeBookClientGUI extends javax.swing.JFrame {
                     this.gradedWorkItemListComboBox.addItem(gradedWorkItemList.get(i)._id);
                 }
             } catch (Exception e) {
-                // report status
             }
-        } else {
-            // report status
         }
-
         this.repaint();
     }
-    
+
+    // update the graded work item info based on passed graded work item
     private void updateGradedWorkItemLabels(GradedWorkItem gradedWorkItem) {
         if (null != gradedWorkItem) {
             this.gradedWorkItemIdLabel.setText(gradedWorkItem._id);
@@ -128,7 +125,7 @@ public class GradeBookClientGUI extends javax.swing.JFrame {
             this.gradedWorkItemStudentIdLabel.setText(gradedWorkItem.student_id);
             this.gradedWorkItemTotalPointsLabel.setText(Integer.toString(gradedWorkItem.totalPoints));
             this.gradedWorkItemPointsLabel.setText(Integer.toString(gradedWorkItem.points));
-            this.gradedWorkItemGradePctLabel.setText(Double.toString(100*(double)gradedWorkItem.points/gradedWorkItem.totalPoints) + "%");
+            this.gradedWorkItemGradePctLabel.setText(Double.toString(100 * (double) gradedWorkItem.points / gradedWorkItem.totalPoints) + "%");
             this.gradedWorkItemCommentsLabel.setText(gradedWorkItem.comments);
             this.gradedWorkItemAppealLabel.setText(gradedWorkItem.appeal);
             this.gradedWorkItemListComboBox.setSelectedItem(gradedWorkItem._id);
@@ -1010,16 +1007,14 @@ public class GradeBookClientGUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    // create a new student event
     private void jButtonCreateStudentMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonCreateStudentMouseClicked
         ClientResponse response;
-
         String fName = this.jTextFieldFirstName.getText();
         String lName = this.jTextFieldLastName.getText();
-
         Student student = new Student();
         student.firstName = fName;
         student.lastName = lName;
-
         try {
             response = this.gradeBookProxy.addStudent(this.mapper.studentObjToJson(student));
             this.jTextFieldCreateStudentResult.setText(response.getStatus() + "|" + response.getClientResponseStatus());
@@ -1033,20 +1028,17 @@ public class GradeBookClientGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButtonCreateStudentMouseClicked
 
+    // create a new work item type event
     private void jButtonCreateWorkItemTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCreateWorkItemTypeActionPerformed
         ClientResponse response;
-
         try {
             String workItemTypename = this.jTextFieldWorkItem_Id.getText();
             double gradWgt = Double.parseDouble(this.jTextFieldWorkItemType_GradWgt.getText());
             double underGradWgt = Double.parseDouble(this.jTextFieldWorkItemType_UnderGradWgt.getText());
-
             WorkItemType workItemType = new WorkItemType();
-
             workItemType._id = workItemTypename;
             workItemType.graduateWeight = gradWgt;
             workItemType.underGraduateWeight = underGradWgt;
-
             response = this.gradeBookProxy.addWorkItemType(this.mapper.workItemTypeObjToJson(workItemType));
             this.jLabelCreateWorkItemTypeStatus.setText(response.getStatus() + "|" + response.getClientResponseStatus());
             if (response.getStatus() == 200) {
@@ -1059,9 +1051,9 @@ public class GradeBookClientGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButtonCreateWorkItemTypeActionPerformed
 
+    // get work item type action
     private void jButtonGetWorkItemTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGetWorkItemTypeActionPerformed
         ClientResponse response;
-        
         try {
             response = this.gradeBookProxy.getWorkItemType(ClientResponse.class, this.jComboBoxWorkItemTypeList.getSelectedItem().toString());
             this.jLabelGetWorkItemTypeStatus.setText(response.getStatus() + "|" + response.getClientResponseStatus());
@@ -1075,15 +1067,14 @@ public class GradeBookClientGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButtonGetWorkItemTypeActionPerformed
 
+    // create a new work item
     private void workItemCreateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_workItemCreateButtonActionPerformed
         ClientResponse response;
-
         try {
             WorkItem workItem = new WorkItem();
             workItem._id = this.workItemIdInput.getText();
             workItem.workItemType_id = this.jComboBoxWorkItemTypeList.getSelectedItem().toString();
             workItem.totalPoints = Integer.parseInt(this.workItemTotalPointsInput.getText());
-
             response = this.gradeBookProxy.addWorkItem(this.mapper.workItemObjToJson(workItem));
             this.workItemStatus.setText(response.getStatus() + "|" + response.getClientResponseStatus());
             if (response.getStatus() == 200) {
@@ -1097,9 +1088,9 @@ public class GradeBookClientGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_workItemCreateButtonActionPerformed
 
+    // get selected work item event
     private void workItemGetSelectedButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_workItemGetSelectedButtonActionPerformed
         ClientResponse response;
-        
         try {
             response = this.gradeBookProxy.getWorkItem(ClientResponse.class, this.workItemListComboBox.getSelectedItem().toString());
             this.workItemStatus.setText(response.getStatus() + "|" + response.getClientResponseStatus());
@@ -1113,15 +1104,14 @@ public class GradeBookClientGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_workItemGetSelectedButtonActionPerformed
 
+    // update selected work item event
     private void workItemUpdateSelectedButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_workItemUpdateSelectedButtonActionPerformed
         ClientResponse response;
-
         try {
             WorkItem workItem = new WorkItem();
             workItem._id = this.workItemListComboBox.getSelectedItem().toString();
             workItem.workItemType_id = this.jComboBoxWorkItemTypeList.getSelectedItem().toString();
             workItem.totalPoints = Integer.parseInt(this.workItemTotalPointsInput.getText());
-
             response = this.gradeBookProxy.updateWorkItem(this.mapper.workItemObjToJson(workItem), workItem._id);
             this.workItemStatus.setText(response.getStatus() + "|" + response.getClientResponseStatus());
             if (response.getStatus() == 200) {
@@ -1136,13 +1126,12 @@ public class GradeBookClientGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_workItemUpdateSelectedButtonActionPerformed
 
+    // delete selected work item
     private void workItemDeleteSelectedButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_workItemDeleteSelectedButtonActionPerformed
         ClientResponse response;
-
         try {
             WorkItem workItem = new WorkItem();
             workItem._id = this.workItemListComboBox.getSelectedItem().toString();
-
             response = this.gradeBookProxy.deleteWorkItem(workItem._id);
             this.workItemStatus.setText(response.getStatus() + "|" + response.getClientResponseStatus());
             if (response.getStatus() == 200) {
@@ -1155,15 +1144,13 @@ public class GradeBookClientGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_workItemDeleteSelectedButtonActionPerformed
 
+    // create a new graded work item
     private void gradedWorkItemCreateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gradedWorkItemCreateButtonActionPerformed
         ClientResponse response;
-
         try {
             response = this.gradeBookProxy.getWorkItem(ClientResponse.class, this.workItemListComboBox.getSelectedItem().toString());
-
             if (response.getStatus() == 200) {
                 WorkItem workItem = this.mapper.workItemJsonToObj(response.getEntity(String.class));
-
                 GradedWorkItem gradedWorkItem = new GradedWorkItem();
                 gradedWorkItem._id = workItem._id;
                 gradedWorkItem.workItemType_id = workItem.workItemType_id;
@@ -1171,25 +1158,22 @@ public class GradeBookClientGUI extends javax.swing.JFrame {
                 gradedWorkItem.student_id = this.jComboBoxStudents.getSelectedItem().toString();
                 gradedWorkItem.points = Integer.parseInt(this.gradedWorkItemPointsInput.getText());
                 gradedWorkItem.comments = this.gradedWorkItemCommentsInput.getText();
-
                 response = this.gradeBookProxy.addGradedWorkItem(this.mapper.workItemObjToJson(gradedWorkItem));
                 this.gradedWorkItemStatus.setText(response.getStatus() + "|" + response.getClientResponseStatus());
-
                 if (response.getStatus() == 200) {
                     gradedWorkItem = this.mapper.gradedWorkItemJsonToObj(response.getEntity(String.class));
                     this.updateGradedWorkItemLabels(gradedWorkItem);
                 }
             }
-            
             this.updateGradedWorkItemList();
         } catch (Exception e) {
             this.gradedWorkItemStatus.setText(e.getMessage());
         }
     }//GEN-LAST:event_gradedWorkItemCreateButtonActionPerformed
 
+    // get the selected work item event
     private void gradedWorkItemGetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gradedWorkItemGetButtonActionPerformed
         ClientResponse response;
-
         try {
             response = this.gradeBookProxy.getGradedWorkItem(ClientResponse.class, this.gradedWorkItemListComboBox.getSelectedItem().toString());
             this.gradedWorkItemStatus.setText(response.getStatus() + "|" + response.getClientResponseStatus());
@@ -1202,41 +1186,31 @@ public class GradeBookClientGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_gradedWorkItemGetButtonActionPerformed
 
+    // update the selected graded work item event
     private void gradedWorkItemUpdateButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_gradedWorkItemUpdateButtonMouseClicked
         ClientResponse response;
-
         try {
             response = this.gradeBookProxy.getGradedWorkItem(ClientResponse.class, this.gradedWorkItemListComboBox.getSelectedItem().toString());
-
             this.gradedWorkItemStatus.setText(response.getStatus() + "|" + response.getClientResponseStatus());
-            
             if (response.getStatus() == 200) {
                 GradedWorkItem gradedWorkItem = this.mapper.gradedWorkItemJsonToObj(response.getEntity(String.class));
-                
                 gradedWorkItem.points = Integer.parseInt(this.gradedWorkItemPointsInput.getText());
                 gradedWorkItem.comments = this.gradedWorkItemCommentsInput.getText();
-                
                 response = this.gradeBookProxy.updateGradedWorkItem(this.mapper.gradedWorkItemObjToJson(gradedWorkItem), gradedWorkItem._id);
-                
                 this.gradedWorkItemStatus.setText(response.getStatus() + "|" + response.getClientResponseStatus());
-                
                 if (response.getStatus() == 200) {
                     this.updateGradedWorkItemLabels(gradedWorkItem);
                     this.gradedWorkItemListComboBox.setSelectedItem(gradedWorkItem._id);
-                } else {
-                    // update failed
                 }
-            } else {
-                // 404 mot found
             }
         } catch (Exception e) {
             this.gradedWorkItemStatus.setText(e.getMessage());
         }
     }//GEN-LAST:event_gradedWorkItemUpdateButtonMouseClicked
 
+    // delete the selected graded work item event
     private void gradedWorkItemDeleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gradedWorkItemDeleteButtonActionPerformed
         ClientResponse response;
-
         try {
             response = this.gradeBookProxy.deleteGradedWorkItem(this.gradedWorkItemListComboBox.getSelectedItem().toString());
             this.gradedWorkItemStatus.setText(response.getStatus() + "|" + response.getClientResponseStatus());
@@ -1249,9 +1223,9 @@ public class GradeBookClientGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_gradedWorkItemDeleteButtonActionPerformed
 
+    // delete the selected student event
     private void studentDeleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentDeleteButtonActionPerformed
         ClientResponse response;
-
         try {
             response = this.gradeBookProxy.deleteStudent(this.jComboBoxStudents.getSelectedItem().toString());
             if (response.getStatus() == 200) {
@@ -1262,43 +1236,33 @@ public class GradeBookClientGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_studentDeleteButtonActionPerformed
 
+    // update the selected work item type event
     private void workItemTypeUpdateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_workItemTypeUpdateButtonActionPerformed
         ClientResponse response;
-
         try {
             response = this.gradeBookProxy.getWorkItemType(ClientResponse.class, this.jComboBoxWorkItemTypeList.getSelectedItem().toString());
-
             this.jLabelGetWorkItemTypeStatus.setText(response.getStatus() + "|" + response.getClientResponseStatus());
-            
             if (response.getStatus() == 200) {
                 WorkItemType workItemType = this.mapper.workItemTypeJsonToObj(response.getEntity(String.class));
-                
                 workItemType.graduateWeight = Double.parseDouble(this.jTextFieldWorkItemType_GradWgt.getText());
                 workItemType.underGraduateWeight = Double.parseDouble(this.jTextFieldWorkItemType_UnderGradWgt.getText());
-                
                 response = this.gradeBookProxy.updateWorkItemType(this.mapper.workItemTypeObjToJson(workItemType), workItemType._id);
-                
                 this.jLabelGetWorkItemTypeStatus.setText(response.getStatus() + "|" + response.getClientResponseStatus());
-                
                 if (response.getStatus() == 200) {
                     workItemType = this.mapper.workItemTypeJsonToObj(response.getEntity(String.class));
                     this.jLabelGradWgt.setText(Double.toString(workItemType.graduateWeight));
                     this.jLabelUnderGradWgt.setText(Double.toString(workItemType.underGraduateWeight));
                     this.jComboBoxWorkItemTypeList.setSelectedItem(workItemType._id);
-                } else {
-                    // update failed
                 }
-            } else {
-                // 404 mot found
             }
         } catch (Exception e) {
             this.jLabelGetWorkItemTypeStatus.setText(e.getMessage());
         }
     }//GEN-LAST:event_workItemTypeUpdateButtonActionPerformed
 
+    // delete the selected work item type
     private void workItemTypeDeleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_workItemTypeDeleteButtonActionPerformed
         ClientResponse response;
-
         try {
             response = this.gradeBookProxy.deleteWorkItemType(this.jComboBoxWorkItemTypeList.getSelectedItem().toString());
             if (response.getStatus() == 200) {
@@ -1309,31 +1273,21 @@ public class GradeBookClientGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_workItemTypeDeleteButtonActionPerformed
 
+    // submit and appeal for the selected graded work item
     private void gradedWorkItemSubmitAppealButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gradedWorkItemSubmitAppealButtonActionPerformed
         ClientResponse response;
-
         try {
             response = this.gradeBookProxy.getGradedWorkItem(ClientResponse.class, this.gradedWorkItemListComboBox.getSelectedItem().toString());
-
             this.gradedWorkItemStatus.setText(response.getStatus() + "|" + response.getClientResponseStatus());
-            
             if (response.getStatus() == 200) {
                 GradedWorkItem gradedWorkItem = this.mapper.gradedWorkItemJsonToObj(response.getEntity(String.class));
-                
                 gradedWorkItem.appeal = this.gradedWorkItemAppealInput.getText();
-                
                 response = this.gradeBookProxy.updateGradedWorkItem(this.mapper.gradedWorkItemObjToJson(gradedWorkItem), gradedWorkItem._id);
-                
                 this.gradedWorkItemStatus.setText(response.getStatus() + "|" + response.getClientResponseStatus());
-                
                 if (response.getStatus() == 200) {
                     this.updateGradedWorkItemLabels(gradedWorkItem);
                     this.gradedWorkItemListComboBox.setSelectedItem(gradedWorkItem._id);
-                } else {
-                    // update failed
                 }
-            } else {
-                // 404 mot found
             }
         } catch (Exception e) {
             this.gradedWorkItemStatus.setText(e.getMessage());
